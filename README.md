@@ -22,7 +22,7 @@
  
 ## Introducción
 
-...
+Esta API está destinada para ser el backend de la aplicación mobile de la empresa MyHome
 
 ## Requisitos
 - [NodeJS](https://nodejs.org/en/download/)
