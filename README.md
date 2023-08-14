@@ -1,4 +1,4 @@
-# Backend para TPO de Seminario :rocket:
+# Backend para TPO de Desarrollo de Aplicaciones I :rocket:
 
 - [Integrantes](#integrantes)
 - [Introducción](#introducción)  
