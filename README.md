@@ -15,7 +15,10 @@
     * [Listado de endpoints](#listado-de-endpoints-de-swagger) 
 
 ## Integrantes
-- ...
+- Canevaro, Tomas
+- Maidana, Emmanuel
+- Patricio, Matias
+- Quatraro, Nicolás
  
 ## Introducción
 

@@ -16,7 +16,7 @@
   "keywords": [
     ""
   ],
-  "author": "Equipo { buscar número } - Desarrollo de Aplicaciones 1 - 2023",
+  "author": "Equipo 3 - Desarrollo de Aplicaciones 1 - 2023",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
