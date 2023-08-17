@@ -5,7 +5,7 @@ const doc = {
     title: 'myhome-api',
     description: 'Aplicación para Desarrollo de Aplicaciones 1 - Only in localhost mode',
   },
-  host: 'localhost:3000',
+  host: 'localhost:3000/api/v1',
   schemes: ['http'],
 };
 

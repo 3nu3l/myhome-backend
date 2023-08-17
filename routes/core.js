@@ -4,9 +4,11 @@ var cors = require('cors')
 const router = express.Router();
 
 const {
-  healthcheck
+  ping,
+  health
 } = require('../controllers/core');
 
-router.get('/', cors(), healthcheck);
+router.get('/', cors(), ping);
+router.get('/health', cors(), health);
 
 module.exports = router;

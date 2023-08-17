@@ -66,14 +66,18 @@ docker-compose up --build -d
 docker-compose down
 ```
 
-## Healthcheck Backend
+## Healthcheck
+#### Sin chequeo de dependencias
+Para el caso de que la API se encuentre levantada sin verificar dependencias:
 ![img]()
 
+#### Con chequeo de dependencias 
+Para el caso de que la API se encuentre funcionando con las dependencias funcionando correctamente:
 
-## Uso del backend
+## Uso de la API
 Ahora el backend está listo para usar.
 
-Se pueden probar los endpoints a través de [Swagger](https://swagger.io/). La misma se encuentra levantada en la ruta "/api-docs", por ejemplo, si el backend se encuentra en el puerto 3000, la ruta es: http://localhost:4000/api-docs
+Se pueden probar los endpoints a través de [Swagger](https://swagger.io/). La misma se encuentra levantada en la ruta "api/v1/docs", por ejemplo, si el backend se encuentra en el puerto 3000, la ruta es: http://localhost:3000/api/v1/docs
 
 ### Listado de endpoints de swagger
 ![img]()
