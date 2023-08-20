@@ -149,7 +149,7 @@ exports.signOut = async (req, res) => {
 
 exports.requestPasswordReset = async (req, res) => {
   /*  
-      #swagger.description = Request password reset
+      #swagger.description = Request password reset by email
   */
   const email = req.params.email;
   const user = await User.findOne({ email });

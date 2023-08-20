@@ -236,7 +236,7 @@
     },
     "/auths/{email}": {
       "get": {
-        "description": "Request password reset",
+        "description": "Request password reset by email",
         "parameters": [
           {
             "name": "email",
