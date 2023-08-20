@@ -13,7 +13,7 @@
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "description": "API status",
         "responses": {
           "200": {
             "description": "OK"
@@ -23,7 +23,7 @@
     },
     "/health": {
       "get": {
-        "description": "",
+        "description": "API dependency status",
         "responses": {
           "200": {
             "description": "OK"
@@ -34,9 +34,9 @@
         }
       }
     },
-    "/signUp": {
+    "/users": {
       "post": {
-        "description": "",
+        "description": "Create a user",
         "parameters": [
           {
             "name": "body",
@@ -76,11 +76,38 @@
             "description": "Conflict"
           }
         }
+      },
+      "get": {
+        "description": "Get all users",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
-    "/user/{email}": {
+    "/users/{email}": {
       "get": {
-        "description": "",
+        "description": "Get a user by email",
         "parameters": [
           {
             "name": "email",
@@ -113,38 +140,9 @@
         }
       }
     },
-    "/users": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/signIn": {
+    "/auths": {
       "post": {
-        "description": "",
+        "description": "User login",
         "parameters": [
           {
             "name": "body",
@@ -179,11 +177,9 @@
             "description": "Not Found"
           }
         }
-      }
-    },
-    "/signOut": {
-      "post": {
-        "description": "",
+      },
+      "delete": {
+        "description": "Logout user",
         "parameters": [
           {
             "name": "authorization",
@@ -206,7 +202,7 @@
     },
     "/reset-password": {
       "post": {
-        "description": "",
+        "description": "Reset password with token",
         "parameters": [
           {
             "name": "body",
@@ -242,7 +238,7 @@
     },
     "/request-reset-password/{email}": {
       "get": {
-        "description": "",
+        "description": "Request password reset",
         "parameters": [
           {
             "name": "email",
