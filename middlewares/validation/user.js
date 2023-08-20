@@ -26,7 +26,7 @@ exports.userValidation = (req, res, next) => {
   if (!result.length) return next();
 
   const error = result[0].msg;
-  res.status(400).json({ success: false, message: "Falta un parametro obligatorio." });
+  res.status(400).json({ success: false, message: error });
 };
 
 exports.validateUserSignIn = [
