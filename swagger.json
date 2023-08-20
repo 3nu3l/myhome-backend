@@ -198,10 +198,8 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/reset-password": {
-      "post": {
+      },
+      "put": {
         "description": "Reset password with token",
         "parameters": [
           {
@@ -236,7 +234,7 @@
         }
       }
     },
-    "/request-reset-password/{email}": {
+    "/auths/{email}": {
       "get": {
         "description": "Request password reset",
         "parameters": [

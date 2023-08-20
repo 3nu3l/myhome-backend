@@ -28,7 +28,7 @@ router.get('/users/:email', cors(), isAuth, validateGetUser, userValidation, get
 router.get('/users', cors(), isAuth, userValidation, getUsers)
 router.post('/auths', cors(), userSignIn, validateUserSignIn, userValidation);
 router.delete('/auths', cors(), isAuth, signOut);
-router.post('/reset-password', cors(), validateNewPassword, passwordReset)
-router.get('/request-reset-password/:email', cors(), requestPasswordReset)
+router.put('/auths', cors(), validateNewPassword, passwordReset)
+router.get('/auths/:email', cors(), requestPasswordReset)
 
 module.exports = router;
