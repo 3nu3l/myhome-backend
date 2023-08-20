@@ -3,7 +3,9 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
-  /*  #swagger.parameters['body'] = {
+  /*  
+      #swagger.description = Create a user
+      #swagger.parameters['body'] = {
           in: 'body',
           required: true,
           schema: {
@@ -12,7 +14,8 @@ exports.createUser = async (req, res) => {
               email: "review@gmail.com",
               password: ""
           }
-  } */
+      } 
+  */
   const {
     firstName,
     lastName,
@@ -38,6 +41,9 @@ exports.createUser = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
+  /*  
+      #swagger.description = Get a user by email
+  */
   const email = req.params.email;
   const user = await User.findOne({ email }).select('email');
   if (!user) {
@@ -52,6 +58,9 @@ exports.getUser = async (req, res) => {
 };
 
 exports.getUsers = async (req, res) => {
+  /*  
+      #swagger.description = Get all users
+  */
   const users = await User.find({}).select('-password');
 
   if (users.length === 0)
@@ -64,14 +73,16 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.userSignIn = async (req, res) => {
-  /*  #swagger.parameters['body'] = {
+  /*  #swagger.description = User login
+      #swagger.parameters['body'] = {
           in: 'body',
           required: true,
           schema: {
               email: "review@gmail.com",
               password: ""
           }
-  } */
+      } 
+  */
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -116,6 +127,9 @@ exports.userSignIn = async (req, res) => {
 };
 
 exports.signOut = async (req, res) => {
+  /*  
+      #swagger.description = Logout user
+  */
   if (req.headers && req.headers.authorization) {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {
@@ -134,6 +148,9 @@ exports.signOut = async (req, res) => {
 };
 
 exports.requestPasswordReset = async (req, res) => {
+  /*  
+      #swagger.description = Request password reset
+  */
   const email = req.params.email;
   const user = await User.findOne({ email });
   if (!user) {
@@ -164,14 +181,16 @@ exports.requestPasswordReset = async (req, res) => {
 };
 
 exports.passwordReset = async (req, res) => {
-  /*  #swagger.parameters['body'] = {
+  /*  #swagger.description = Reset password with token
+      #swagger.parameters['body'] = {
           in: 'body',
           required: true,
           schema: {
               email: "review@gmail.com",
               password: "my-new-password"
           }
-  } */
+      } 
+  */
   const { email, password } = req.body;
   const _user = await User.findOne({ email });
   if (!_user) {
