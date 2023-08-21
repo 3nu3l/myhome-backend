@@ -1,4 +1,2 @@
 node_modules/**/*
 .env
-aux_swagger.json
-package-lock.json
