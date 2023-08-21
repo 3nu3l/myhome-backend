@@ -1,8 +1,8 @@
 const express = require('express');
 require('dotenv').config();
 var cors = require('cors')
-const userRouter = require('./routes/user');
-const coreRouter = require('./routes/core');
+const userRouter = require('./pages/api/user');
+const coreRouter = require('./pages/api/core');
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger.json');
 const swaggerConfig = require('./middlewares/config/swagger');
@@ -24,8 +24,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 const swaggerSpec = (swaggerJsDoc(swaggerConfig));
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerSpec));
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerSpec, { customCssUrl: CSS_URL }));
 
 const PORT = process.env.HTTP_PORT || 3000;
 var listener = app.listen(PORT, () => {

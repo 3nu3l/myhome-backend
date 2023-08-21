@@ -32,6 +32,6 @@ module.exports = {
     swaggerDefinition,
     basePath: "/",
     apis: [
-        '../../routes/*.js'
+        '../../pages/api/*.js'
     ]
 }

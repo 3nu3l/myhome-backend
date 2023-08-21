@@ -20,6 +20,7 @@ exports.health = async (req, res) => {
         .then(() => {
             console.log('Successfully connected to MongoDB.');
             res.status(200).send({ status: 'success', message: 'database ok' });
+            mongoose.connection.close()
         })
         .catch(err => {
             console.log("Error connecting to MongoDB:", err);
