@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "myhome-api",
-    "description": "Aplicación para Desarrollo de Aplicaciones 1 - Only in localhost mode",
+    "title": "myhome-backend",
+    "description": "Aplicación para Desarrollo de Aplicaciones 1 - Only in vercel",
     "version": "1.0.0"
   },
   "host": "localhost:3000/api/v1",
