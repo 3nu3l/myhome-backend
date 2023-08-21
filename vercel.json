@@ -8,7 +8,7 @@
     ],
     "routes": [
         {
-            "src": "/pages/api/(.*)",
+            "src": "/routes/(.*)",
             "dest": "index.js"
         }
     ]
