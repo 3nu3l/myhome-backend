@@ -25,8 +25,7 @@ app.use(function (req, res, next) {
 });
 
 const swaggerSpec = (swaggerJsDoc(swaggerConfig));
-const swaggerCss = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerSpec, { customCssUrl: swaggerCss }));
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerSpec), express.static('node_modules/swagger-ui-dist/'));
 
 const PORT = process.env.HTTP_PORT || 3000;
 var listener = app.listen(PORT, () => {
