@@ -9,10 +9,6 @@ module.exports = {
         mongoose.set('useUnifiedTopology', true);
         mongoose.connect(MONGODB_URI);
 
-        mongoose.connection.on('connection', (stream) => {
-            console.log('Successfully connected to MongoDB.');
-        });
-
         mongoose.connection.on('error', err => {
             console.log("Error connecting to MongoDB:", err);
             process.exit();
