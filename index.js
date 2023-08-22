@@ -15,7 +15,7 @@ app.use(cors());
 app.use('/api/v1', userRouter);
 app.use('/api/v1', coreRouter);
 app.get('/', (req, res) => {
-  res.redirect('/api/v1');  
+  res.redirect('/api/v1');
 });
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -25,7 +25,12 @@ app.use(function (req, res, next) {
 });
 
 const swaggerSpec = (swaggerJsDoc(swaggerConfig));
-app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerSpec), express.static('node_modules/swagger-ui-dist/'));
+const swaggerCss = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+app.use(
+  '/api/v1/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerFile, swaggerSpec, { customCssUrl: swaggerCss })
+);
 
 const PORT = process.env.HTTP_PORT || 3000;
 var listener = app.listen(PORT, () => {

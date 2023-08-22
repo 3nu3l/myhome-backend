@@ -5,10 +5,9 @@
     "description": "Aplicación para Desarrollo de Aplicaciones 1 - Only in vercel",
     "version": "1.0.0"
   },
-  "host": "localhost:3000/api/v1",
+  "host": "https://myhome-backend-enuelx.vercel.app",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "paths": {
