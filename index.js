@@ -26,7 +26,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const options = { customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.1/themes/3.x/theme-flattop.css' };
+const options = { customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.4.2/swagger-ui.css' };
 
 app.use('/api/v1/docs', function (req, res, next) {
   swaggerDocument.host = req.get('host');
