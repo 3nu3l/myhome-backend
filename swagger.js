@@ -6,7 +6,7 @@ const doc = {
     description: 'Aplicación para Desarrollo de Aplicaciones 1 - Only in vercel',
   },
   host: 'myhome-backend.vercel.app',
-  schemes: ['https'],
+  schemes: ['http', 'https'],
 };
 
 swaggerAutogen('./swagger.json', ['routes/*.js'], doc);

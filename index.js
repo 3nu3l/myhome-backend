@@ -4,9 +4,7 @@ var cors = require('cors')
 const userRouter = require('./routes/user');
 const coreRouter = require('./routes/core');
 const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./swagger.json');
-const swaggerConfig = require('./middlewares/config/swagger');
-const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerDocument = require('./swagger.json');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -24,9 +22,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-const options = { customCssUrl: '/public/css/swagger-ui.css', };
+const options = { customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.1/themes/3.x/theme-flattop.min.css', };
 
-router.use('/api/v1/docs', function (req, res, next) {
+app.use('/api/v1/docs', function (req, res, next) {
   swaggerDocument.host = req.get('host');
   req.swaggerDoc = swaggerDocument;
   next();
