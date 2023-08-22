@@ -15,6 +15,10 @@ app.use('/api/v1', coreRouter);
 app.get('/', (req, res) => {
   res.redirect('/api/v1');
 });
+// // por defecto van a v1
+// app.all('*', (req, res) => {
+//   res.redirect('/api/v1' + req.path);
+// });
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.header("Access-Control-Allow-Origin", "*");
