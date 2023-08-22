@@ -5,6 +5,8 @@ const userRouter = require('./routes/v1/user');
 const coreRouter = require('./routes/v1/core');
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json');
+const db = require('./middlewares/config/db');
+db.connect(process.env.MONGODB_URI)
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
