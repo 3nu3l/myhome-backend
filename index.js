@@ -15,8 +15,7 @@ app.use(cors());
 app.use('/api/v1', userRouter);
 app.use('/api/v1', coreRouter);
 app.get('/', (req, res) => {
-  //res.redirect('/api/v1');  
-  res.json({ success: true, message: 'Backend OK' });
+  res.redirect('/api/v1');  
 });
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
