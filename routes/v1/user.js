@@ -11,9 +11,9 @@ const {
   signOut,
   passwordReset,
   requestPasswordReset
-} = require('../controllers/user');
+} = require('../../controllers/user');
 // para que se use con el token despues de loguearse
-const { isAuth } = require('../middlewares/config/auth');
+const { isAuth } = require('../../middlewares/config/auth');
 // validaciones de lógica del contenido de los campos que se envían
 const {
   validateUserSignUp,
@@ -21,7 +21,7 @@ const {
   validateUserSignIn,
   validateGetUser,
   validateNewPassword
-} = require('../middlewares/validation/user');
+} = require('../../middlewares/validation/user');
 
 router.post('/users', cors(), validateUserSignUp, userValidation, createUser);
 router.get('/users/:email', cors(), isAuth, validateGetUser, userValidation, getUser)

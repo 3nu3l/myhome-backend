@@ -1,8 +1,8 @@
 const express = require('express');
 require('dotenv').config();
 var cors = require('cors')
-const userRouter = require('./routes/user');
-const coreRouter = require('./routes/core');
+const userRouter = require('./routes/v1/user');
+const coreRouter = require('./routes/v1/core');
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json');
 
@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const options = { customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.1/themes/3.x/theme-flattop.min.css', };
+const options = { customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.1/themes/3.x/theme-flattop.css' };
 
 app.use('/api/v1/docs', function (req, res, next) {
   swaggerDocument.host = req.get('host');

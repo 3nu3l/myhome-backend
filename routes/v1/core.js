@@ -6,7 +6,7 @@ const router = express.Router();
 const {
   ping,
   health
-} = require('../controllers/core');
+} = require('../../controllers/core');
 
 router.get('/', cors(), ping);
 router.get('/health', cors(), health);
