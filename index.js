@@ -24,13 +24,13 @@ app.use(function (req, res, next) {
   next();
 });
 
-const swaggerSpec = (swaggerJsDoc(swaggerConfig));
-const swaggerCss = './public/swagger-ui.css';
-app.use(
-  '/api/v1/docs',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerFile, swaggerSpec, { customCssUrl: swaggerCss })
-);
+const options = { customCssUrl: '/public/css/swagger-ui.css', };
+
+router.use('/api/v1/docs', function (req, res, next) {
+  swaggerDocument.host = req.get('host');
+  req.swaggerDoc = swaggerDocument;
+  next();
+}, swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 const PORT = process.env.HTTP_PORT || 3000;
 var listener = app.listen(PORT, () => {
