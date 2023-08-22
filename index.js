@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
 });
 
 const swaggerSpec = (swaggerJsDoc(swaggerConfig));
-const swaggerCss = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+const swaggerCss = './public/swagger-ui.css';
 app.use(
   '/api/v1/docs',
   swaggerUi.serve,
