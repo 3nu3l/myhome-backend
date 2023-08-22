@@ -5,7 +5,7 @@ const doc = {
     title: 'myhome-backend',
     description: 'Aplicación para Desarrollo de Aplicaciones 1 - Only in vercel',
   },
-  host: 'https://myhome-backend-enuelx.vercel.app',
+  host: 'myhome-backend.vercel.app',
   schemes: ['https'],
 };
 
