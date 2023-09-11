@@ -24,6 +24,14 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  role: {
+    type: String,
+    default: 'guest'
+  },
+  active: {
+    type: String,
+    default: false
   }
 },
   {
