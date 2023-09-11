@@ -14,7 +14,8 @@ exports.createUser = async (req, res) => {
               email: "review@gmail.com",
               password: ""
           }
-      } 
+      }
+      #swagger.tags = ['Users']
   */
   const {
     firstName,
@@ -43,6 +44,7 @@ exports.createUser = async (req, res) => {
 exports.getUser = async (req, res) => {
   /*  
       #swagger.description = Get a user by email
+      #swagger.tags = ['Users']
   */
   const email = req.params.email;
   const user = await User.findOne({ email }).select('email');
@@ -60,6 +62,7 @@ exports.getUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   /*  
       #swagger.description = Get all users
+      #swagger.tags = ['Users']
   */
   const users = await User.find({}).select('-password');
 
@@ -81,7 +84,8 @@ exports.userSignIn = async (req, res) => {
               email: "review@gmail.com",
               password: ""
           }
-      } 
+      }
+      #swagger.tags = ['Users']
   */
   const { email, password } = req.body;
 
@@ -129,6 +133,7 @@ exports.userSignIn = async (req, res) => {
 exports.signOut = async (req, res) => {
   /*  
       #swagger.description = Logout user
+      #swagger.tags = ['Users']
   */
   if (req.headers && req.headers.authorization) {
     const token = req.headers.authorization.split(' ')[1];
@@ -150,6 +155,7 @@ exports.signOut = async (req, res) => {
 exports.requestPasswordReset = async (req, res) => {
   /*  
       #swagger.description = Request password reset by email
+      #swagger.tags = ['Users']
   */
   const email = req.params.email;
   const user = await User.findOne({ email });
@@ -190,6 +196,7 @@ exports.passwordReset = async (req, res) => {
               password: "my-new-password"
           }
       } 
+      #swagger.tags = ['Users']
   */
   const { email, password } = req.body;
   const _user = await User.findOne({ email });

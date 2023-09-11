@@ -14,6 +14,9 @@
   "paths": {
     "/": {
       "get": {
+        "tags": [
+          "Health API"
+        ],
         "description": "API status",
         "responses": {
           "200": {
@@ -24,6 +27,9 @@
     },
     "/health": {
       "get": {
+        "tags": [
+          "Health API"
+        ],
         "description": "API dependency status",
         "responses": {
           "200": {
@@ -37,6 +43,9 @@
     },
     "/users": {
       "post": {
+        "tags": [
+          "Users"
+        ],
         "description": "Create a user",
         "parameters": [
           {
@@ -79,6 +88,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "Get all users",
         "parameters": [
           {
@@ -108,6 +120,9 @@
     },
     "/users/{email}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "Get a user by email",
         "parameters": [
           {
@@ -143,6 +158,9 @@
     },
     "/auths": {
       "post": {
+        "tags": [
+          "Users"
+        ],
         "description": "User login",
         "parameters": [
           {
@@ -180,6 +198,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Users"
+        ],
         "description": "Logout user",
         "parameters": [
           {
@@ -201,6 +222,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Users"
+        ],
         "description": "Reset password with token",
         "parameters": [
           {
@@ -237,6 +261,9 @@
     },
     "/auths/{email}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
         "description": "Request password reset by email",
         "parameters": [
           {

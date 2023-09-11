@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 exports.ping = async (req, res) => {
     /*  
         #swagger.description = API status
+        #swagger.tags = ['Health API']
     */
     return res.status(200).json({ success: true, message: 'pong' });
 };
@@ -10,6 +11,7 @@ exports.ping = async (req, res) => {
 exports.health = async (req, res) => {
     /*  
         #swagger.description = API dependency status
+        #swagger.tags = ['Health API']
     */
     mongoose
         .connect(process.env.MONGODB_URI, {
