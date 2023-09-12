@@ -20,12 +20,12 @@ exports.health = async (req, res) => {
             useCreateIndex: true,
         })
         .then(() => {
-            console.log('Successfully connected to MongoDB.');
+            //logger.info('Successfully connected to MongoDB.');
             res.status(200).send({ status: 'success', message: 'database ok' });
             mongoose.connection.close();
         })
         .catch(err => {
-            console.log("Error connecting to MongoDB:", err);
+            //logger.error('Error connecting to MongoDB:', err);
             res.status(500).send({ status: 'fail', message: 'database ' + err.message });
         });
 };
