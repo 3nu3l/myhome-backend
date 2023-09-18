@@ -49,6 +49,12 @@ exports.getProperties = async (req, res) => {
 exports.updateProperty = async (req, res) => {
     /*  
         #swagger.description = Update a property
+        #swagger.parameters['id'] = {
+            in: 'path',
+            description: "Property ID.",
+            required: true,
+            type: "number"
+        }
         #swagger.tags = ['Properties']
     */
     res.status(200).json({ success: true, message: "Dummy response" });

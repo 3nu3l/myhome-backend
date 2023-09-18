@@ -105,22 +105,33 @@
           }
         }
       },
-      "put": {
-        "tags": [
-          "Properties"
-        ],
-        "description": "Update a property",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
       "patch": {
         "tags": [
           "Properties"
         ],
         "description": "Update a field for a property",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/properties/{id}": {
+      "put": {
+        "tags": [
+          "Properties"
+        ],
+        "description": "Update a property",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "number",
+            "description": "Property ID."
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

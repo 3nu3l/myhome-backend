@@ -16,7 +16,7 @@ const { isAuth } = require('../../middlewares/config/auth');
 
 router.post('/properties', cors(), createProperty);
 router.get('/properties', cors(), getProperties);
-router.put('/properties', cors(), updateProperty);
+router.put('/properties/:id', cors(), updateProperty);
 router.patch('/properties', cors(), updateFieldProperty);
 
 module.exports = router;
