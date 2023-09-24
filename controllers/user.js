@@ -42,7 +42,13 @@ exports.createUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   /*  
-      #swagger.description = Get a user by email
+      #swagger.description = Get user information by email (login).
+      #swagger.parameters['email'] = {
+        in: 'query',
+        description: "email to get user information",
+        required: true,
+        type: "string"
+      }
       #swagger.tags = ['Users']
   */
   const email = req.params.email;

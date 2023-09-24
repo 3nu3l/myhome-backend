@@ -102,14 +102,14 @@
             "name": "latitude",
             "in": "query",
             "description": "Latitude to filter properties.",
-            "required": false,
+            "required": true,
             "type": "number"
           },
           {
             "name": "longitude",
             "in": "query",
             "description": "Longitude to filter properties.",
-            "required": false,
+            "required": true,
             "type": "number"
           }
         ],
@@ -433,12 +433,19 @@
         "tags": [
           "Users"
         ],
-        "description": "Get all users",
+        "description": "Get a user by email",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
             "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "email to get users",
             "required": true,
             "type": "string"
           }
