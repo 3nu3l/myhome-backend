@@ -13,9 +13,9 @@ const { isAuth } = require('../../middlewares/config/auth');
 
 // } = require('../../middlewares/validation/realStateCompanies');
 
-router.post('/real-state-companies', cors(), createRSC);
-router.put('/real-state-companies', cors(), updateRSC);
-router.patch('/real-state-companies', cors(), updateFieldRSC);
+router.post('/real-state-companies', cors(), isAuth, createRSC);
+router.put('/real-state-companies/:id', cors(), isAuth, updateRSC);
+router.patch('/real-state-companies/:id', cors(), isAuth, updateFieldRSC);
 
 
 module.exports = router;

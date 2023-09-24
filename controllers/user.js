@@ -25,8 +25,7 @@ exports.createUser = async (req, res) => {
   } = req.body;
   const isNewUser = await User.isThisEmailInUse(email);
   if (!isNewUser) {
-    res.status(409)
-    return res.json({
+    return res.status(409).json({
       success: false,
       message: 'Este email ya existe en la plataforma. Si no recuerda la contraseña la puede recuperar',
     });
@@ -38,7 +37,7 @@ exports.createUser = async (req, res) => {
     password
   });
   await user.save();
-  res.json({ success: true, user });
+  res.status(201).json({ success: true, user });
 };
 
 exports.getUser = async (req, res) => {

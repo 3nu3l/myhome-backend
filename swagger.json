@@ -49,18 +49,39 @@
         "description": "Create a property",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
-            "required": false,
+            "required": true,
             "schema": {
               "type": "object",
-              "properties": {}
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "example": "value"
+                }
+              }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -70,6 +91,13 @@
         ],
         "description": "Obtain a property with parameters",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "latitude",
             "in": "query",
@@ -83,36 +111,20 @@
             "description": "Longitude to filter properties.",
             "required": false,
             "type": "number"
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "description": "Email of the user to fetch favorite properties.",
-            "required": false,
-            "type": "number"
-          },
-          {
-            "name": "areFavorites",
-            "in": "query",
-            "description": "Favorites propierties for user",
-            "required": false,
-            "type": "boolean"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Properties"
-        ],
-        "description": "Update a field for a property",
-        "responses": {
-          "200": {
-            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -130,11 +142,93 @@
             "required": true,
             "type": "number",
             "description": "Property ID."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Fields to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "example": "value"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Properties"
+        ],
+        "description": "Update a field for a property",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "number",
+            "description": "Property ID."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Field to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "example": "value"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -145,20 +239,95 @@
           "Real State Companies"
         ],
         "description": "Create a real state company",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Real State Company to create",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "example": "value"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
-      },
+      }
+    },
+    "/real-state-companies/{id}": {
       "put": {
         "tags": [
           "Real State Companies"
         ],
         "description": "Update a real estate company",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "number",
+            "description": "Real State Company ID."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Fields to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "example": "value"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -167,9 +336,49 @@
           "Real State Companies"
         ],
         "description": "Update a field for a real estate company",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "number",
+            "description": "Real State Company ID."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Field to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "example": "value"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -209,8 +418,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           },
           "400": {
             "description": "Bad Request"
@@ -229,6 +438,8 @@
           {
             "name": "authorization",
             "in": "header",
+            "description": "Auth API.",
+            "required": true,
             "type": "string"
           }
         ],
@@ -301,6 +512,8 @@
           {
             "name": "authorization",
             "in": "header",
+            "description": "Auth API.",
+            "required": true,
             "type": "string"
           }
         ],

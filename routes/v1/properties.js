@@ -14,9 +14,9 @@ const { isAuth } = require('../../middlewares/config/auth');
 
 // } = require('../../middlewares/validation/properties');
 
-router.post('/properties', cors(), createProperty);
-router.get('/properties', cors(), getProperties);
-router.put('/properties/:id', cors(), updateProperty);
-router.patch('/properties', cors(), updateFieldProperty);
+router.post('/properties', cors(), isAuth, createProperty);
+router.get('/properties', cors(), isAuth, getProperties);
+router.put('/properties/:id', cors(), isAuth, updateProperty);
+router.patch('/properties/:id', cors(), isAuth, updateFieldProperty);
 
 module.exports = router;

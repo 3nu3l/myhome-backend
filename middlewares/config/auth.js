@@ -2,6 +2,13 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 
 exports.isAuth = async (req, res, next) => {
+  /*  
+      #swagger.parameters['authorization'] = {
+          in: 'header',
+          description: "Auth API.",
+          required: true
+      }
+  */
   if (req.headers && req.headers.authorization) {
     const parts = req.headers.authorization.split(' ');
     if (parts.length !== 2 || parts[0] !== 'Bearer' || !parts[1]) {
