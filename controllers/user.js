@@ -197,7 +197,6 @@ exports.passwordReset = async (req, res) => {
           in: 'body',
           required: true,
           schema: {
-              email: "review@gmail.com",
               password: "my-new-password"
           }
       } 

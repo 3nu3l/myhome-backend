@@ -29,11 +29,10 @@ router.post('/auths', cors(), userSignIn, validateUserSignIn, userValidation);
 router.get('/users', cors(), isAuth, userValidation, getUser)
 router.get('/users/properties', cors(), isAuth, getFavoriteProperties);
 router.put('/users/:id', cors(), isAuth, updateUser);
+router.patch('/users/:id/reset-password', cors(), isAuth, passwordReset)
 router.patch('/users/:id', cors(), isAuth, updateFieldUser);
 router.delete('/auths', cors(), isAuth, signOut);
 router.delete('/users/:id', cors(), isAuth, deleteUser);
 //router.get('/users/:email', cors(), isAuth, validateGetUser, userValidation, getUser)
-//router.put('/auths', cors(), validateNewPassword, passwordReset)
-//router.get('/auths/:email', cors(), requestPasswordReset)
 
 module.exports = router;
