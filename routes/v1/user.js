@@ -10,6 +10,7 @@ const {
   signOut,
   updateUser,
   updateFieldUser,
+  getFavoriteProperties,
   passwordReset,
   requestPasswordReset
 } = require('../../controllers/user');
@@ -29,6 +30,7 @@ router.post('/auths', cors(), userSignIn, validateUserSignIn, userValidation);
 router.delete('/auths', cors(), isAuth, signOut);
 router.put('/users/:id', cors(), isAuth, updateUser);
 router.patch('/users/:id', cors(), isAuth, updateFieldUser);
+router.get('/users/properties', cors(), isAuth, getFavoriteProperties);
 //router.put('/auths', cors(), validateNewPassword, passwordReset)
 //router.get('/auths/:email', cors(), requestPasswordReset)
 

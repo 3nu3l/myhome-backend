@@ -295,3 +295,23 @@ exports.updateFieldUser = async (req, res) => {
 
   res.status(200).json({ success: true, message: "Dummy response" });
 };
+
+exports.getFavoriteProperties = async (req, res) => {
+  /*  
+      #swagger.description = Obtain favorite properties for a user.
+      #swagger.parameters['id'] = {
+          in: 'query',
+          description: "User ID for get favorite properties.",
+          required: true,
+          type: "number"
+      }
+      #swagger.tags = ['Users']
+  */
+  const {
+      id,
+  } = req.query;
+  if (id === "no existe") {
+      res.status(404).json({ success: false, message: "Dummy response" })
+  }
+  res.status(200).json({ success: true, message: "Dummy response" });
+};

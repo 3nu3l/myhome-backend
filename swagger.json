@@ -726,6 +726,44 @@
           }
         }
       }
+    },
+    "/users/properties": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Obtain favorite properties for a user.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Auth API.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "User ID for get favorite properties.",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
     }
   }
 }
