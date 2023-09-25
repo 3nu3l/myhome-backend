@@ -24,6 +24,46 @@ exports.createRSC = async (req, res) => {
     res.status(201).json({ success: true, message: "Dummy response" });
 };
 
+exports.getRSC = async (req, res) => {
+    /*  
+        #swagger.description = Obtain a real state company with ID.
+        #swagger.parameters['id'] = {
+            in: 'query',
+            description: "Real State Company ID.",
+            required: true,
+            type: "number"
+        }
+        #swagger.tags = ['Real State Companies']
+    */
+    const {
+        id,
+    } = req.query;
+    if (id === "no existe") {
+        res.status(404).json({ success: false, message: "Dummy response" })
+    }
+    res.status(200).json({ success: true, message: "Dummy response" });
+};
+
+exports.getOwnProperties = async (req, res) => {
+    /*  
+        #swagger.description = Obtain properties for a real state company.
+        #swagger.parameters['id'] = {
+            in: 'query',
+            description: "Real State Company ID for get own properties.",
+            required: true,
+            type: "number"
+        }
+        #swagger.tags = ['Real State Companies']
+    */
+    const {
+        id,
+    } = req.query;
+    if (id === "no existe") {
+        res.status(404).json({ success: false, message: "Dummy response" })
+    }
+    res.status(200).json({ success: true, message: "Dummy response" });
+};
+
 exports.updateRSC = async (req, res) => {
     /*  
         #swagger.description = Update a real estate company

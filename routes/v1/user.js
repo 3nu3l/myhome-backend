@@ -8,6 +8,8 @@ const {
   getUsers,
   userSignIn,
   signOut,
+  updateUser,
+  updateFieldUser,
   passwordReset,
   requestPasswordReset
 } = require('../../controllers/user');
@@ -25,6 +27,8 @@ router.post('/users', cors(), validateUserSignUp, userValidation, createUser);
 router.get('/users', cors(), isAuth, userValidation, getUser)
 router.post('/auths', cors(), userSignIn, validateUserSignIn, userValidation);
 router.delete('/auths', cors(), isAuth, signOut);
+router.put('/users/:id', cors(), isAuth, updateUser);
+router.patch('/users/:id', cors(), isAuth, updateFieldUser);
 //router.put('/auths', cors(), validateNewPassword, passwordReset)
 //router.get('/auths/:email', cors(), requestPasswordReset)
 
