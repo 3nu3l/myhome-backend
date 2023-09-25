@@ -135,3 +135,24 @@ exports.updateFieldRSC = async (req, res) => {
 
     res.status(200).json({ success: true, message: "Dummy response" });
 };
+
+exports.getAppointments = async (req, res) => {
+    /*  
+        #swagger.description = Get appointments for a real state company.
+        #swagger.parameters['RealStateID'] = {
+            in: 'query',
+            description: "Real State Company ID.",
+            required: true,
+            type: "number"
+        }
+        #swagger.tags = ['Real State Companies']
+    */
+    const {
+        RealStateID
+    } = req.query;
+    if (RealStateID === "no existe") {
+        res.status(404).json({ success: false, message: "Dummy response" })
+    }
+
+    res.status(200).json({ success: true, message: "Dummy response" });
+};

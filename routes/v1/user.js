@@ -24,13 +24,13 @@ const {
 } = require('../../middlewares/validation/user');
 
 router.post('/users', cors(), validateUserSignUp, userValidation, createUser);
-//router.get('/users/:email', cors(), isAuth, validateGetUser, userValidation, getUser)
-router.get('/users', cors(), isAuth, userValidation, getUser)
 router.post('/auths', cors(), userSignIn, validateUserSignIn, userValidation);
-router.delete('/auths', cors(), isAuth, signOut);
+router.get('/users', cors(), isAuth, userValidation, getUser)
+router.get('/users/properties', cors(), isAuth, getFavoriteProperties);
 router.put('/users/:id', cors(), isAuth, updateUser);
 router.patch('/users/:id', cors(), isAuth, updateFieldUser);
-router.get('/users/properties', cors(), isAuth, getFavoriteProperties);
+router.delete('/auths', cors(), isAuth, signOut);
+//router.get('/users/:email', cors(), isAuth, validateGetUser, userValidation, getUser)
 //router.put('/auths', cors(), validateNewPassword, passwordReset)
 //router.get('/auths/:email', cors(), requestPasswordReset)
 
