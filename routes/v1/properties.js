@@ -8,7 +8,8 @@ const {
     updateProperty,
     updateFieldProperty,
     getAppointments,
-    createAppointments
+    createAppointments,
+    deleteProperty
 } = require('../../controllers/properties');
 const { isAuth } = require('../../middlewares/config/auth');
 // validaciones de lógica del contenido de los campos que se envían
@@ -22,5 +23,6 @@ router.get('/properties', cors(), isAuth, getProperties);
 router.get('/properties/appointments', cors(), isAuth, getAppointments);
 router.put('/properties/:id', cors(), isAuth, updateProperty);
 router.patch('/properties/:id', cors(), isAuth, updateFieldProperty);
+router.delete('/properties/:id', cors(), isAuth, deleteProperty);
 
 module.exports = router;

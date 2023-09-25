@@ -148,3 +148,24 @@ exports.createAppointments = async (req, res) => {
     }
     res.status(201).json({ success: true, message: "Dummy response" });
 };
+
+exports.deleteProperty = async (req, res) => {
+    /*  
+        #swagger.description = Delete a property
+        #swagger.parameters['id'] = {
+            in: 'path',
+            description: "Property ID.",
+            required: true,
+            type: "number"
+        }
+        #swagger.tags = ['Properties']
+    */
+    const {
+        id,
+    } = req.path;
+    if (id === "no existe") {
+        res.status(404).json({ success: false, message: "Dummy response" })
+    }
+
+    res.status(204).json({ success: true, message: "Dummy response" });
+};

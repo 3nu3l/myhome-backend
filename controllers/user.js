@@ -308,10 +308,31 @@ exports.getFavoriteProperties = async (req, res) => {
       #swagger.tags = ['Users']
   */
   const {
-      id,
+    id,
   } = req.query;
   if (id === "no existe") {
-      res.status(404).json({ success: false, message: "Dummy response" })
+    res.status(404).json({ success: false, message: "Dummy response" })
   }
   res.status(200).json({ success: true, message: "Dummy response" });
+};
+
+exports.deleteUser = async (req, res) => {
+  /*  
+      #swagger.description = Delete a user
+      #swagger.parameters['id'] = {
+          in: 'path',
+          description: "User ID.",
+          required: true,
+          type: "number"
+      }
+      #swagger.tags = ['Users']
+  */
+  const {
+    id,
+  } = req.path;
+  if (id === "no existe") {
+    res.status(404).json({ success: false, message: "Dummy response" })
+  }
+
+  res.status(204).json({ success: true, message: "Dummy response" });
 };
