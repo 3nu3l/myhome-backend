@@ -326,6 +326,9 @@
           "404": {
             "description": "Not Found"
           },
+          "409": {
+            "description": "Conflict"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -376,6 +379,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict"
           },
           "500": {
             "description": "Internal Server Error"
@@ -433,7 +439,7 @@
         "tags": [
           "Users"
         ],
-        "description": "Get a user by email",
+        "description": "Get user information by email (login).",
         "parameters": [
           {
             "name": "authorization",
@@ -445,7 +451,7 @@
           {
             "name": "email",
             "in": "query",
-            "description": "email to get users",
+            "description": "email to get user information",
             "required": true,
             "type": "string"
           }
