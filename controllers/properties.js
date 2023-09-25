@@ -29,14 +29,20 @@ exports.getProperties = async (req, res) => {
         #swagger.parameters['latitude'] = {
             in: 'query',
             description: "Latitude to filter properties.",
-            required: true,
+            required: false,
             type: "number"
         }
         #swagger.parameters['longitude'] = {
             in: 'query',
             description: "Longitude to filter properties.",
-            required: true,
+            required: false,
             type: "number"
+        }
+        #swagger.parameters['search'] = {
+            in: 'query',
+            description: "Filter by property characteristics.",
+            required: false,
+            type: "array"
         }
         #swagger.tags = ['Properties']
     */
