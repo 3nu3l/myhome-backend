@@ -30,5 +30,18 @@ const realEstateCompaniesSchema = new mongoose.Schema({
         }
     });
 
+realEstateCompaniesSchema.statics.isThisEmailInUse = async function (contactEmail) {
+    if (!contactEmail) throw new Error('Email inválido');
+    try {
+        const rsc = await this.findOne({ contactEmail });
+        if (rsc) return false;
+
+        return true;
+    } catch (error) {
+        console.log('Error en isThisEmailInUse method', error.message);
+        return false;
+    }
+};
+
 realEstateCompaniesSchema.plugin(AutoIncrement, { id: 'real_estate_companies_seq', inc_field: '_id' });
 module.exports = mongoose.model('RealEstateCompanies', realEstateCompaniesSchema);

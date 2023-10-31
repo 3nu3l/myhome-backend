@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/realStateCompanies');
+const RSC = require('../models/realStateCompanies');
 const bcrypt = require('bcrypt');
 
 exports.createRSC = async (req, res) => {
@@ -10,18 +10,32 @@ exports.createRSC = async (req, res) => {
             description: "Real State Company to create",
             required: true,
             schema: {
-                key: "value"
+              fantasyName: "MyRealState",
+              contactEmail: "myrealstate@gmail.com",
+              password: ""
             }
         }
         #swagger.tags = ['Real State Companies']
     */
     const {
-        key,
+        fantasyName,
+        contactEmail,
+        password,
     } = req.body;
-    if (key === "no se puede crear") {
-        res.status(409).json({ success: false, message: "Dummy response" })
+    const isNewRSC = await RSC.isThisEmailInUse(contactEmail);
+    if (!isNewRSC) {
+        return res.status(409).json({
+            success: false,
+            message: 'Este email ya existe en la plataforma. Si no recuerda la contraseña la puede recuperar',
+        });
     }
-    res.status(201).json({ success: true, message: "Dummy response" });
+    const newRSC = await RSC({
+        fantasyName,
+        contactEmail,
+        password,
+    });
+    await newRSC.save();
+    res.status(201).json({ success: true, newRSC });
 };
 
 exports.getRSC = async (req, res) => {

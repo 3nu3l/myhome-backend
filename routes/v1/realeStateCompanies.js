@@ -12,12 +12,11 @@ const {
     deleteRSC
 } = require('../../controllers/realStateCompanies');
 const { isAuth } = require('../../middlewares/config/auth');
-// validaciones de lógica del contenido de los campos que se envían
-// const {
+const {
+    validateRealStateCreate
+} = require('../../middlewares/validation/realStateCompanies');
 
-// } = require('../../middlewares/validation/realStateCompanies');
-
-router.post('/real-state-companies', cors(), isAuth, createRSC);
+router.post('/real-state-companies', cors(), validateRealStateCreate, createRSC);
 router.get('/real-state-companies', cors(), isAuth, getRSC);
 router.get('/real-state-companies/properties', cors(), isAuth, getOwnProperties);
 router.get('/real-state-companies/properties/appointments', cors(), isAuth, getAppointments);
