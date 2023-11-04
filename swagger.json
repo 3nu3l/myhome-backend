@@ -363,27 +363,34 @@
         "tags": [
           "Real State Companies"
         ],
-        "description": "Create a real state company",
+        "description": "Create a Real State Company",
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Real State Company to create",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "fantasyName": {
                   "type": "string",
-                  "example": "MyRealState"
+                  "example": "Argento"
                 },
-                "contactEmail": {
+                "email": {
                   "type": "string",
-                  "example": "myrealstate@gmail.com"
+                  "example": "review@gmail.com"
                 },
                 "password": {
                   "type": "string",
                   "example": ""
+                },
+                "contactEmail": {
+                  "type": "string",
+                  "example": "review@gmail.com"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "business"
                 }
               }
             }
@@ -686,6 +693,10 @@
                 "password": {
                   "type": "string",
                   "example": ""
+                },
+                "role": {
+                  "type": "string",
+                  "example": "client"
                 }
               }
             }

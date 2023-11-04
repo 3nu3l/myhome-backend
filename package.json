@@ -6,6 +6,7 @@
   "proxy": "http://localhost:3000",
   "scripts": {
     "start": "node index.js",
+    "start-all": "node swagger.js && node index.js",
     "swagger": "node swagger.js"
   },
   "repository": {

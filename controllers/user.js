@@ -12,7 +12,8 @@ exports.createUser = async (req, res) => {
               firstName: "Pepe",
               lastName: "Argento",
               email: "review@gmail.com",
-              password: ""
+              password: "",
+              role: "client"
           }
       }
       #swagger.tags = ['Users']
@@ -22,6 +23,7 @@ exports.createUser = async (req, res) => {
     lastName,
     email,
     password,
+    role
   } = req.body;
   const isNewUser = await User.isThisEmailInUse(email);
   if (!isNewUser) {
@@ -34,7 +36,8 @@ exports.createUser = async (req, res) => {
     firstName,
     lastName,
     email,
-    password
+    password,
+    role
   });
   await user.save();
   res.status(201).json({ success: true, user });
@@ -94,7 +97,7 @@ exports.userSignIn = async (req, res) => {
   */
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+  var user = await User.findOne({ email });
 
   if (!user) {
     return res.status(404).json({

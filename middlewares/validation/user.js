@@ -19,6 +19,12 @@ exports.validateUserSignUp = [
     .withMessage('La contraseña se encuentra vacía!')
     .matches(/^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,16}$/)
     .withMessage('Ingrese una contraseña válida. Debe poseer: entre 8 y 16 caracteres alfanuméricos, dos letras mayúsculas,un caracter especial, elegir entre: !@#$&*, tres letras minúsculas, dos números'),
+  check('role')
+    .trim()
+    .not()
+    .isEmpty()
+    .isIn(['client'])
+    .withMessage('Rol inválido, debe ser "client"'),
 ];
 
 exports.userValidation = (req, res, next) => {
@@ -36,6 +42,12 @@ exports.validateUserSignIn = [
     .not()
     .isEmpty()
     .withMessage('email / password son requeridos!'),
+  check('role')
+    .trim()
+    .not()
+    .isEmpty()
+    .isIn(['client', 'business'])
+    .withMessage('Rol inválido, debe ser "client" o "business"'),
 ];
 
 exports.validateGetUser = [

@@ -10,11 +10,15 @@ const userSchema = new mongoose.Schema({
   // campos que se envían desde el frontend
   firstName: {
     type: String,
-    required: true,
+    required: false,
   },
   lastName: {
     type: String,
-    required: true,
+    required: false,
+  },
+  fantasyName: {
+    type: String,
+    required: false,
   },
   email: {
     type: String,
@@ -27,11 +31,17 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'guest'
+    required: true
   },
   active: {
     type: String,
-    default: false
+    default: true
+  },
+  rating: {
+    type: Number,
+  },
+  comments: {
+    type: String,
   }
 },
   {
