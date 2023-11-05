@@ -62,9 +62,183 @@
             "schema": {
               "type": "object",
               "properties": {
-                "key": {
+                "description": {
                   "type": "string",
-                  "example": "value"
+                  "example": "Una descripción detallada de la propiedad."
+                },
+                "associatedRealEstate": {
+                  "type": "string",
+                  "example": "email@inmobiliaria.com (se obtiene del usuario logueado con rol business)"
+                },
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "street": {
+                      "type": "string",
+                      "example": "Calle Falsa"
+                    },
+                    "number": {
+                      "type": "number",
+                      "example": 123
+                    },
+                    "floor": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "department": {
+                      "type": "string",
+                      "example": "A"
+                    },
+                    "district": {
+                      "type": "string",
+                      "example": "Distrito Central"
+                    },
+                    "town": {
+                      "type": "string",
+                      "example": "Ciudad Gótica"
+                    },
+                    "province": {
+                      "type": "string",
+                      "example": "Provincia"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "País"
+                    }
+                  }
+                },
+                "geolocation": {
+                  "type": "object",
+                  "properties": {
+                    "latitude": {
+                      "type": "string",
+                      "example": "-34.603722"
+                    },
+                    "longitude": {
+                      "type": "string",
+                      "example": "-58.381592"
+                    }
+                  }
+                },
+                "rooms": {
+                  "type": "number",
+                  "example": 5
+                },
+                "bedrooms": {
+                  "type": "number",
+                  "example": 3
+                },
+                "bathrooms": {
+                  "type": "number",
+                  "example": 2
+                },
+                "hasTerrace": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "hasBalcony": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "garage": {
+                  "type": "number",
+                  "example": 1
+                },
+                "hasStorageRoom": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "age": {
+                  "type": "number",
+                  "example": 20
+                },
+                "propertyType": {
+                  "type": "string",
+                  "enum": [
+                    "casa",
+                    "ph",
+                    "departamento",
+                    "local",
+                    "oficina",
+                    "galpon",
+                    "terreno"
+                  ]
+                },
+                "squareMeters": {
+                  "type": "object",
+                  "properties": {
+                    "covered": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "semiCovered": {
+                      "type": "number",
+                      "example": 50
+                    },
+                    "uncovered": {
+                      "type": "number",
+                      "example": 30
+                    }
+                  }
+                },
+                "frontOrBack": {
+                  "type": "string",
+                  "enum": [
+                    "frente",
+                    "contrafrente"
+                  ]
+                },
+                "orientation": {
+                  "type": "string",
+                  "enum": [
+                    "norte",
+                    "sur",
+                    "este",
+                    "oeste"
+                  ]
+                },
+                "amenities": {
+                  "type": "string",
+                  "enum": [
+                    "quincho",
+                    "pileta",
+                    "jacuzzi",
+                    "sauna",
+                    "SUM",
+                    "sala de juegos"
+                  ]
+                },
+                "photos": {
+                  "type": "array",
+                  "example": [
+                    "http://example.com/photo1.jpg",
+                    "http://example.com/photo2.jpg"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "video": {
+                  "type": "string",
+                  "example": "http://example.com/videotour.mp4"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 250000
+                },
+                "expensesPrice": {
+                  "type": "number",
+                  "example": 5000
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "en alquiler",
+                    "en venta",
+                    "reservada",
+                    "alquilada",
+                    "vendida"
+                  ]
                 }
               }
             }

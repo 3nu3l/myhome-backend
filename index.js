@@ -5,6 +5,7 @@ var cors = require('cors')
 const userRouter = require('./routes/v1/user');
 const coreRouter = require('./routes/v1/core');
 const realeStateCompanies = require('./routes/v1/realeStateCompanies');
+const properties = require('./routes/v1/properties');
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json');
 const db = require('./middlewares/config/db');
@@ -19,6 +20,8 @@ app.use(morgan(":method :url :status :res[content-length] - :response-time ms"))
 app.use('/api/v1', userRouter);
 app.use('/api/v1', coreRouter);
 app.use('/api/v1', realeStateCompanies);
+app.use('/api/v1', properties);
+
 app.get('/', (req, res) => {
   res.redirect('/api/v1');
 });

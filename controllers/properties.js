@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/properties');
+const Properties = require('../models/properties');
 const bcrypt = require('bcrypt');
 
 exports.createProperty = async (req, res) => {
@@ -9,18 +9,149 @@ exports.createProperty = async (req, res) => {
             in: 'body',
             required: true,
             schema: {
-                key: "value"
+                description: "Una descripción detallada de la propiedad.",
+                associatedRealEstate: "email@inmobiliaria.com (se obtiene del usuario logueado con rol business)",
+                address: {
+                    street: "Calle Falsa",
+                    number: 123,
+                    floor: 4,
+                    department: "A",
+                    district: "Distrito Central",
+                    town: "Ciudad Gótica",
+                    province: "Provincia",
+                    country: "País"
+                },
+                geolocation: {
+                    latitude: "-34.603722",
+                    longitude: "-58.381592"
+                },
+                rooms: 5,
+                bedrooms: 3,
+                bathrooms: 2,
+                hasTerrace: true,
+                hasBalcony: false,
+                garage: 1,
+                hasStorageRoom: true,
+                age: 20,
+                propertyType: {
+                    '@enum': [
+                        "casa",
+                        "ph",
+                        "departamento",
+                        "local",
+                        "oficina",
+                        "galpon",
+                        "terreno"
+                    ]
+                },
+                squareMeters: {
+                    covered: 100,
+                    semiCovered: 50,
+                    uncovered: 30
+                },
+                frontOrBack: {
+                    '@enum': [
+                        "frente",
+                        "contrafrente"
+                    ]
+                },
+                orientation: {
+                    '@enum': [
+                        "norte",
+                        "sur",
+                        "este",
+                        "oeste"
+                    ]
+                },
+                amenities: {
+                    '@enum': [
+                        "quincho",
+                        "pileta",
+                        "jacuzzi",
+                        "sauna",
+                        "SUM",
+                        "sala de juegos"
+                    ]
+                },
+                photos: [
+                    "http://example.com/photo1.jpg",
+                    "http://example.com/photo2.jpg"
+                ],
+                video: "http://example.com/videotour.mp4",
+                price: 250000.00,
+                expensesPrice: 5000.00,
+                status: {
+                    '@enum': [
+                        "en alquiler",
+                        "en venta",
+                        "reservada",
+                        "alquilada",
+                        "vendida"
+                    ]
+                }
             }
         }
         #swagger.tags = ['Properties']
     */
-    const {
-        key,
-    } = req.body;
-    if (key === "no se puede crear") {
-        res.status(409).json({ success: false, message: "Dummy response" })
+    try {
+        const {
+            description,
+            associatedRealEstate,
+            address,
+            geolocation,
+            rooms,
+            bedrooms,
+            bathrooms,
+            hasTerrace,
+            hasBalcony,
+            garage,
+            hasStorageRoom,
+            age,
+            propertyType,
+            squareMeters,
+            frontOrBack,
+            orientation,
+            amenities,
+            photos,
+            video,
+            price,
+            expensesPrice,
+            status
+        } = req.body;
+
+        const newProperty = await Properties({
+            description,
+            associatedRealEstate,
+            address,
+            geolocation,
+            rooms,
+            bedrooms,
+            bathrooms,
+            hasTerrace,
+            hasBalcony,
+            garage,
+            hasStorageRoom,
+            age,
+            propertyType,
+            squareMeters,
+            frontOrBack,
+            orientation,
+            amenities,
+            photos,
+            video,
+            price,
+            expensesPrice,
+            status
+        });
+        await newProperty.save();
+
+        res.status(201).json({ success: true, message: "Property created successfully", property: newProperty });
+    } catch (error) {
+        if (error.message === "no se puede crear") {
+            return res.status(409).json({ success: false, message: "Property cannot be created" });
+        }
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
     }
-    res.status(201).json({ success: true, message: "Dummy response" });
 };
 
 exports.getProperties = async (req, res) => {
