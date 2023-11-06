@@ -1180,7 +1180,7 @@
         }
       }
     },
-    "/users/{id}/reset-password": {
+    "/users/reset-password": {
       "patch": {
         "tags": [
           "Users"
@@ -1188,18 +1188,16 @@
         "description": "Reset password with token",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "review@gmail.com"
+                },
                 "password": {
                   "type": "string",
                   "example": "my-new-password"
