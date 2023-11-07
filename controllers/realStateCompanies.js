@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const sendMail = require('./email');
 
 exports.createRSC = async (req, res) => {
     /*  
@@ -39,6 +40,14 @@ exports.createRSC = async (req, res) => {
         password,
         role
     });
+    try {
+        sendMail.send(email, "Bienvenido " + fantasyName + " a My Home", "Bienvenido! Se creó la cuenta con éxito.")
+    } catch (error) {
+        return res.status(409).json({
+            success: false,
+            message: 'No se puede enviar el email: ' + error.message,
+        });
+    }
     await rsc.save();
     res.status(201).json({ success: true, rsc });
 };

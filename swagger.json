@@ -574,6 +574,9 @@
           "201": {
             "description": "Created"
           },
+          "400": {
+            "description": "Bad Request"
+          },
           "409": {
             "description": "Conflict"
           }
@@ -1180,13 +1183,49 @@
         }
       }
     },
-    "/users/reset-password": {
+    "/users/{id}/reset-password": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Request password reset by email",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/{id}/reset-password/{token}": {
       "patch": {
         "tags": [
           "Users"
         ],
         "description": "Reset password with token",
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
