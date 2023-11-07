@@ -41,7 +41,7 @@ exports.createRSC = async (req, res) => {
         role
     });
     try {
-        sendMail.send(email, "Bienvenido " + fantasyName + " a My Home", "Bienvenido! Se creó la cuenta con éxito.")
+        sendMail.send(email, "Bienvenido " + fantasyName + " a My Home", "Bienvenido! Se creó la cuenta con éxito, ya podés crear propiedades.")
     } catch (error) {
         return res.status(409).json({
             success: false,
