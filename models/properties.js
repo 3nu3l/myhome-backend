@@ -8,8 +8,8 @@ const propertiesSchema = new mongoose.Schema({
     },
     address: {
         street: String,
-        number: Number,
-        floor: Number,
+        number: String,
+        floor: String,
         department: String,
         district: String,
         town: String,
@@ -25,22 +25,22 @@ const propertiesSchema = new mongoose.Schema({
         enum: ['casa', 'ph', 'departamento', 'local', 'oficina', 'galpon', 'terreno']
     },
     squareMeters: {
-        covered: Number,
-        semiCovered: Number,
-        uncovered: Number
+        covered: String,
+        semiCovered: String,
+        uncovered: String
     },
-    rooms: Number,
-    bedrooms: Number,
-    bathrooms: Number,
-    hasTerrace: Boolean,
-    hasBalcony: Boolean,
-    garage: Number,
-    hasStorageRoom: Boolean,
+    rooms: String,
+    bedrooms: String,
+    bathrooms: String,
+    hasTerrace: String,
+    hasBalcony: String,
+    garage: String,
+    hasStorageRoom: String,
     frontOrBack: {
         type: String,
         enum: ['frente', 'contrafrente']
     },
-    age: Number,
+    age: String,
     orientation: {
         type: String,
         enum: ['norte', 'sur', 'este', 'oeste']
@@ -52,8 +52,8 @@ const propertiesSchema = new mongoose.Schema({
     description: String,
     photos: [String],
     video: { type: String, required: false },
-    price: Number,
-    expensesPrice: Number,
+    price: String,
+    expensesPrice: String,
     status: {
         type: String,
         enum: ['en alquiler', 'en venta', 'reservada', 'alquilada', 'vendida']
