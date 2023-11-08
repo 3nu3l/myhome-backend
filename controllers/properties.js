@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 const Properties = require('../models/properties');
 const bcrypt = require('bcrypt');
+const { 
+    parseAddressObject, 
+    parseSquareMeters 
+} = require('../middlewares/config/parser');
 
 exports.createProperty = async (req, res) => {
     /*  
@@ -13,8 +17,8 @@ exports.createProperty = async (req, res) => {
                 associatedRealEstate: "email@inmobiliaria.com (se obtiene del usuario logueado con rol business)",
                 address: {
                     street: "Calle Falsa",
-                    number: 123,
-                    floor: 4,
+                    number: "123",
+                    floor: "4",
                     department: "A",
                     district: "Distrito Central",
                     town: "Ciudad Gótica",
@@ -25,14 +29,14 @@ exports.createProperty = async (req, res) => {
                     latitude: "-34.603722",
                     longitude: "-58.381592"
                 },
-                rooms: 5,
-                bedrooms: 3,
-                bathrooms: 2,
-                hasTerrace: true,
-                hasBalcony: false,
-                garage: 1,
-                hasStorageRoom: true,
-                age: 20,
+                rooms: "5",
+                bedrooms: "3",
+                bathrooms: "2",
+                hasTerrace: "true",
+                hasBalcony: "false",
+                garage: "1",
+                hasStorageRoom: "true",
+                age: "20",
                 propertyType: {
                     '@enum': [
                         "casa",
@@ -45,9 +49,9 @@ exports.createProperty = async (req, res) => {
                     ]
                 },
                 squareMeters: {
-                    covered: 100,
-                    semiCovered: 50,
-                    uncovered: 30
+                    covered: "100",
+                    semiCovered: "50",
+                    uncovered: "30"
                 },
                 frontOrBack: {
                     '@enum': [
@@ -78,8 +82,8 @@ exports.createProperty = async (req, res) => {
                     "http://example.com/photo2.jpg"
                 ],
                 video: "http://example.com/videotour.mp4",
-                price: 250000.00,
-                expensesPrice: 5000.00,
+                price: "250000.00",
+                expensesPrice: "5000.00",
                 status: {
                     '@enum': [
                         "en alquiler",
@@ -143,6 +147,7 @@ exports.createProperty = async (req, res) => {
             expensesPrice,
             status
         });
+
         await newProperty.save();
 
         res.status(201).json({ success: true, message: "Property created successfully", property: newProperty });
