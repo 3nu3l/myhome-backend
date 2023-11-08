@@ -32,10 +32,10 @@ const propertiesSchema = new mongoose.Schema({
     rooms: String,
     bedrooms: String,
     bathrooms: String,
-    hasTerrace: String,
-    hasBalcony: String,
+    hasTerrace: Boolean,
+    hasBalcony: Boolean,
     garage: String,
-    hasStorageRoom: String,
+    hasStorageRoom: Boolean,
     frontOrBack: {
         type: String,
         enum: ['frente', 'contrafrente']

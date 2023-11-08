@@ -28,10 +28,10 @@ exports.createProperty = async (req, res) => {
                 rooms: "5",
                 bedrooms: "3",
                 bathrooms: "2",
-                hasTerrace: "true",
-                hasBalcony: "false",
+                hasTerrace: true,
+                hasBalcony: false,
                 garage: "1",
-                hasStorageRoom: "true",
+                hasStorageRoom: true,
                 age: "20",
                 propertyType: {
                     '@enum': [
