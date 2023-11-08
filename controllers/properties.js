@@ -1,10 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Properties = require('../models/properties');
 const bcrypt = require('bcrypt');
-const { 
-    parseAddressObject, 
-    parseSquareMeters 
-} = require('../middlewares/config/parser');
 
 exports.createProperty = async (req, res) => {
     /*  
