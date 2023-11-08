@@ -9,6 +9,12 @@ exports.createProperty = async (req, res) => {
             in: 'body',
             required: true,
             schema: {
+                currency: {
+                    '@enum': [
+                        "ars",
+                        "usd"
+                    ]
+                },
                 description: "Una descripción detallada de la propiedad.",
                 associatedRealEstate: "email@inmobiliaria.com (se obtiene del usuario logueado con rol business)",
                 address: {
@@ -63,16 +69,14 @@ exports.createProperty = async (req, res) => {
                         "oeste"
                     ]
                 },
-                amenities: {
-                    '@enum': [
+                amenities: [
                         "quincho",
                         "pileta",
                         "jacuzzi",
                         "sauna",
                         "SUM",
                         "sala de juegos"
-                    ]
-                },
+                ],
                 photos: [
                     "http://example.com/photo1.jpg",
                     "http://example.com/photo2.jpg"

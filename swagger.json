@@ -62,6 +62,13 @@
             "schema": {
               "type": "object",
               "properties": {
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "ars",
+                    "usd"
+                  ]
+                },
                 "description": {
                   "type": "string",
                   "example": "Una descripción detallada de la propiedad."
@@ -198,15 +205,18 @@
                   ]
                 },
                 "amenities": {
-                  "type": "string",
-                  "enum": [
+                  "type": "array",
+                  "example": [
                     "quincho",
                     "pileta",
                     "jacuzzi",
                     "sauna",
                     "SUM",
                     "sala de juegos"
-                  ]
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "photos": {
                   "type": "array",
