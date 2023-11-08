@@ -78,12 +78,12 @@
                       "example": "Calle Falsa"
                     },
                     "number": {
-                      "type": "number",
-                      "example": 123
+                      "type": "string",
+                      "example": "123"
                     },
                     "floor": {
-                      "type": "number",
-                      "example": 4
+                      "type": "string",
+                      "example": "4"
                     },
                     "department": {
                       "type": "string",
@@ -121,36 +121,36 @@
                   }
                 },
                 "rooms": {
-                  "type": "number",
-                  "example": 5
+                  "type": "string",
+                  "example": "5"
                 },
                 "bedrooms": {
-                  "type": "number",
-                  "example": 3
+                  "type": "string",
+                  "example": "3"
                 },
                 "bathrooms": {
-                  "type": "number",
-                  "example": 2
+                  "type": "string",
+                  "example": "2"
                 },
                 "hasTerrace": {
-                  "type": "boolean",
-                  "example": true
+                  "type": "string",
+                  "example": "true"
                 },
                 "hasBalcony": {
-                  "type": "boolean",
-                  "example": false
+                  "type": "string",
+                  "example": "false"
                 },
                 "garage": {
-                  "type": "number",
-                  "example": 1
+                  "type": "string",
+                  "example": "1"
                 },
                 "hasStorageRoom": {
-                  "type": "boolean",
-                  "example": true
+                  "type": "string",
+                  "example": "true"
                 },
                 "age": {
-                  "type": "number",
-                  "example": 20
+                  "type": "string",
+                  "example": "20"
                 },
                 "propertyType": {
                   "type": "string",
@@ -168,16 +168,16 @@
                   "type": "object",
                   "properties": {
                     "covered": {
-                      "type": "number",
-                      "example": 100
+                      "type": "string",
+                      "example": "100"
                     },
                     "semiCovered": {
-                      "type": "number",
-                      "example": 50
+                      "type": "string",
+                      "example": "50"
                     },
                     "uncovered": {
-                      "type": "number",
-                      "example": 30
+                      "type": "string",
+                      "example": "30"
                     }
                   }
                 },
@@ -223,12 +223,12 @@
                   "example": "http://example.com/videotour.mp4"
                 },
                 "price": {
-                  "type": "number",
-                  "example": 250000
+                  "type": "string",
+                  "example": "250000.00"
                 },
                 "expensesPrice": {
-                  "type": "number",
-                  "example": 5000
+                  "type": "string",
+                  "example": "5000.00"
                 },
                 "status": {
                   "type": "string",
