@@ -133,20 +133,20 @@
                   "example": "2"
                 },
                 "hasTerrace": {
-                  "type": "string",
-                  "example": "true"
+                  "type": "boolean",
+                  "example": true
                 },
                 "hasBalcony": {
-                  "type": "string",
-                  "example": "false"
+                  "type": "boolean",
+                  "example": false
                 },
                 "garage": {
                   "type": "string",
                   "example": "1"
                 },
                 "hasStorageRoom": {
-                  "type": "string",
-                  "example": "true"
+                  "type": "boolean",
+                  "example": true
                 },
                 "age": {
                   "type": "string",
