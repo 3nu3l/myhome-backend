@@ -6,6 +6,10 @@ const propertiesSchema = new mongoose.Schema({
     _id: {
         type: Number
     },
+    currency: {
+        type: String,
+        enum: ['ars', 'usd']
+    },
     address: {
         street: String,
         number: String,
@@ -46,8 +50,8 @@ const propertiesSchema = new mongoose.Schema({
         enum: ['norte', 'sur', 'este', 'oeste']
     },
     amenities: {
-        type: String,
-        enum: ['quincho', 'pileta', 'jacuzzi', 'sauna', 'SUM', 'sala de juegos']
+        type: [String],
+        //enum: ['quincho', 'pileta', 'jacuzzi', 'sauna', 'SUM', 'sala de juegos']
     },
     description: String,
     photos: [String],
