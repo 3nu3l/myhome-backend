@@ -125,15 +125,17 @@ exports.createProperty = async (req, res) => {
     } = req.body;
 
     try {
-        const isBusiness = await User.isThisEmailInUse(associatedRealEstate);
-        if (!isBusiness) {
-            return res.status(403).json({ success: false, message: "The user doesn't have permission to create properties. You'll need business role." });
-        }
-    } catch (error) {
-        return res.status(500).json({ success: false, message: error.message });
-    }
+    //     //console.log(associatedRealEstate)
+    //     const user = await User.findOne({ email }).select('email');
+    //     //const isBusiness = await User.findOne({ associatedRealEstate }).select('email');
 
-    try {
+    //    //console.log(isBusiness)
+    //     console.log(user)
+
+    //     if (!isBusiness) {
+    //         return res.status(403).json({ success: false, message: "The user doesn't have permission to create properties. You'll need business role." });
+    //     }
+
         const newProperty = await Properties({
             description,
             associatedRealEstate,
@@ -165,6 +167,7 @@ exports.createProperty = async (req, res) => {
     } catch (error) {
         return res.status(409).json({ success: false, message: "Property cannot be created" });
     }
+
 };
 
 exports.getProperties = async (req, res) => {
