@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Properties = require('../models/properties');
+const User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 exports.createProperty = async (req, res) => {
@@ -97,32 +98,42 @@ exports.createProperty = async (req, res) => {
         }
         #swagger.tags = ['Properties']
     */
-    try {
-        const {
-            description,
-            associatedRealEstate,
-            address,
-            geolocation,
-            rooms,
-            bedrooms,
-            bathrooms,
-            hasTerrace,
-            hasBalcony,
-            garage,
-            hasStorageRoom,
-            age,
-            propertyType,
-            squareMeters,
-            frontOrBack,
-            orientation,
-            amenities,
-            photos,
-            video,
-            price,
-            expensesPrice,
-            status
-        } = req.body;
 
+    const {
+        description,
+        associatedRealEstate,
+        address,
+        geolocation,
+        rooms,
+        bedrooms,
+        bathrooms,
+        hasTerrace,
+        hasBalcony,
+        garage,
+        hasStorageRoom,
+        age,
+        propertyType,
+        squareMeters,
+        frontOrBack,
+        orientation,
+        amenities,
+        photos,
+        video,
+        price,
+        expensesPrice,
+        status
+    } = req.body;
+
+    try {
+        const isBusiness = await User.isThisEmailInUse(associatedRealEstate);
+        if (!isBusiness) {
+            return res.status(403).json({ success: false, message: "The user doesn't have permission to create properties. You'll need business role." });
+        }
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+
+    try {
         const newProperty = await Properties({
             description,
             associatedRealEstate,
@@ -152,10 +163,7 @@ exports.createProperty = async (req, res) => {
 
         res.status(201).json({ success: true, message: "Property created successfully", property: newProperty });
     } catch (error) {
-        if (error.message === "no se puede crear") {
-            return res.status(409).json({ success: false, message: "Property cannot be created" });
-        }
-        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+        return res.status(409).json({ success: false, message: "Property cannot be created" });
     }
 };
 
