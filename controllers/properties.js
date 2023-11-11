@@ -128,8 +128,6 @@ exports.createProperty = async (req, res) => {
         const email = associatedRealEstate;
         const user = await User.findOne({ email }).select('role');
 
-        console.log(user.role)
-
         if (user.role != "business") {
             return res.status(403).json({ success: false, message: "The user doesn't have permission to create properties. You'll need business role." });
         }
@@ -163,7 +161,6 @@ exports.createProperty = async (req, res) => {
 
         res.status(201).json({ success: true, message: "Property created successfully", property: newProperty });
     } catch (error) {
-        console.error(error.message);
         return res.status(409).json({ success: false, message: "Property cannot be created" });
     }
 
@@ -171,35 +168,272 @@ exports.createProperty = async (req, res) => {
 
 exports.getProperties = async (req, res) => {
     /*  
-        #swagger.description = Obtain a property with parameters
-        #swagger.parameters['latitude'] = {
+        #swagger.description = Obtain a property with parameters.
+        #swagger.parameters['description'] = {
             in: 'query',
-            description: "Latitude to filter properties.",
+            description: "Filter by property description.",
             required: false,
-            type: "number"
+            type: "string"
         }
-        #swagger.parameters['longitude'] = {
+        #swagger.parameters['associatedRealEstate'] = {
             in: 'query',
-            description: "Longitude to filter properties.",
+            description: "Filter by associated real estate.",
             required: false,
-            type: "number"
+            type: "string"
         }
-        #swagger.parameters['search'] = {
+        #swagger.parameters['street'] = {
             in: 'query',
-            description: "Filter by property characteristics.",
+            description: "Filter by street address in the properties address.",
             required: false,
-            type: "array"
+            type: "string"
+        }
+
+        #swagger.parameters['number'] = {
+            in: 'query',
+            description: "Filter by street number in the properties address.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['floor'] = {
+            in: 'query',
+            description: "Filter by floor in the properties address.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['department'] = {
+            in: 'query',
+            description: "Filter by department in the properties address.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['district'] = {
+            in: 'query',
+            description: "Filter by district in the properties address.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['town'] = {
+            in: 'query',
+            description: "Filter by town in the properties address.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['province'] = {
+            in: 'query',
+            description: "Filter by province in the properties address.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['country'] = {
+            in: 'query',
+            description: "Filter by country in the properties address.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['geolocation'] = {
+            in: 'query',
+            description: "Filter by property geolocation.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['rooms'] = {
+            in: 'query',
+            description: "Filter by number of rooms.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['bedrooms'] = {
+            in: 'query',
+            description: "Filter by number of bedrooms.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['bathrooms'] = {
+            in: 'query',
+            description: "Filter by number of bathrooms.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['hasTerrace'] = {
+            in: 'query',
+            description: "Filter by presence of a terrace.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['hasBalcony'] = {
+            in: 'query',
+            description: "Filter by presence of a balcony.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['garage'] = {
+            in: 'query',
+            description: "Filter by presence of a garage.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['hasStorageRoom'] = {
+            in: 'query',
+            description: "Filter by presence of a storage room.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['age'] = {
+            in: 'query',
+            description: "Filter by property age.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['propertyType'] = {
+            in: 'query',
+            description: "Filter by property type.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['squareMeters'] = {
+            in: 'query',
+            description: "Filter by square meters of the property.",
+            required: false,
+            type: "string"
+        }
+
+        #swagger.parameters['frontOrBack'] = {
+            in: 'query',
+            description: "Filter by property facing front or back.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['orientation'] = {
+            in: 'query',
+            description: "Filter by property orientation.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['amenities'] = {
+            in: 'query',
+            description: "Filter by property amenities.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['photos'] = {
+            in: 'query',
+            description: "Filter by property photos.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['video'] = {
+            in: 'query',
+            description: "Filter by property video.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['price'] = {
+            in: 'query',
+            description: "Filter by property price.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['expensesPrice'] = {
+            in: 'query',
+            description: "Filter by property expenses price.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['status'] = {
+            in: 'query',
+            description: "Filter by property status.",
+            required: false,
+            type: "string"
         }
         #swagger.tags = ['Properties']
     */
+
     const {
-        latitude,
-        longitude
+        description,
+        associatedRealEstate,
+        geolocation,
+        rooms,
+        bedrooms,
+        bathrooms,
+        hasTerrace,
+        hasBalcony,
+        garage,
+        hasStorageRoom,
+        age,
+        propertyType,
+        squareMeters,
+        frontOrBack,
+        orientation,
+        amenities,
+        photos,
+        video,
+        price,
+        expensesPrice,
+        status,
+        street,
+        number,
+        floor,
+        department,
+        district,
+        town,
+        province,
+        country
     } = req.query;
-    if (latitude === "no existe" && longitude === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+
+    try {
+        let queryParams = {};
+        let addressParams = {};
+
+        if (street) addressParams.street = street;
+        if (number) addressParams.number = number;
+        if (floor) addressParams.floor = floor;
+        if (department) addressParams.department = department;
+        if (district) addressParams.district = district;
+        if (town) addressParams.town = town;
+        if (province) addressParams.province = province;
+        if (country) addressParams.country = country;
+        
+        if (addressParams != null ) {
+            queryParams.address = addressParams
+        }
+
+        if (description) queryParams.description = description;
+        if (associatedRealEstate) queryParams.associatedRealEstate = associatedRealEstate;
+        //if (geolocation) queryParams.geolocation = geolocation;
+        if (rooms) queryParams.rooms = rooms;
+        if (bedrooms) queryParams.bedrooms = bedrooms;
+        if (bathrooms) queryParams.bathrooms = bathrooms;
+        if (hasTerrace) queryParams.hasTerrace = hasTerrace;
+        if (hasBalcony) queryParams.hasBalcony = hasBalcony;
+        if (garage) queryParams.garage = garage;
+        if (hasStorageRoom) queryParams.hasStorageRoom = hasStorageRoom;
+        if (age) queryParams.age = age;
+        if (propertyType) queryParams.propertyType = propertyType;
+        if (squareMeters) queryParams.squareMeters = squareMeters;
+        if (frontOrBack) queryParams.frontOrBack = frontOrBack;
+        if (orientation) queryParams.orientation = orientation;
+        if (amenities) queryParams.amenities = amenities;
+        if (photos) queryParams.photos = photos;
+        if (video) queryParams.video = video;
+        if (price) queryParams.price = price;
+        if (expensesPrice) queryParams.expensesPrice = expensesPrice;
+        if (status) queryParams.status = status;
+
+        console.log(queryParams)
+        const properties = await Properties.find(queryParams);
+        res.status(200).json({ success: true, properties });
     }
-    res.status(200).json({ success: true, message: "Dummy response" });
+
+    catch (error) {
+        res.status(500).json({ success: false, message: "Error al obtener propiedades: " + error });
+    }
 };
 
 exports.updateProperty = async (req, res) => {
