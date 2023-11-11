@@ -399,8 +399,8 @@ exports.getProperties = async (req, res) => {
         if (town) addressParams.town = town;
         if (province) addressParams.province = province;
         if (country) addressParams.country = country;
-        
-        if (addressParams != null ) {
+
+        if (Object.keys(addressParams).length > 0) {
             queryParams.address = addressParams
         }
 
