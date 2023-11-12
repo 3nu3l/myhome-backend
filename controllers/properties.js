@@ -566,12 +566,17 @@ exports.deleteProperty = async (req, res) => {
         }
         #swagger.tags = ['Properties']
     */
-    const {
-        id,
-    } = req.path;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
-    }
+    const { id } = req.params;
 
-    res.status(204).json({ success: true, message: "Dummy response" });
+    try {
+        const property = await Properties.findByIdAndRemove(id);
+
+        if (!property) {
+            return res.status(404).json({ success: false, message: "No se encuentra la propiedad con ID: " + id });
+        }
+
+        res.status(202).json({ success: true, message: "Se borró la propiedad con id: " + id});
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error borrando propiedad: " + error });
+    }
 };
