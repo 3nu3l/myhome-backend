@@ -487,6 +487,11 @@
             "description": "Filter by property status.",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "address",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {

@@ -391,17 +391,25 @@ exports.getProperties = async (req, res) => {
         let queryParams = {};
         let addressParams = {};
 
-        if (street) addressParams.street = street;
-        if (number) addressParams.number = number;
-        if (floor) addressParams.floor = floor;
-        if (department) addressParams.department = department;
-        if (district) addressParams.district = district;
-        if (town) addressParams.town = town;
-        if (province) addressParams.province = province;
-        if (country) addressParams.country = country;
+        const addressFields = [
+            'street',
+            'number',
+            'floor',
+            'department',
+            'district',
+            'town',
+            'province',
+            'country',
+        ];
+
+        addressFields.forEach((field) => {
+            if (req.query.address && req.query.address[field]) {
+                addressParams[field] = req.query.address[field];
+            }
+        });
 
         if (Object.keys(addressParams).length > 0) {
-            queryParams.address = addressParams
+            queryParams.address = addressParams;
         }
 
         if (description) queryParams.description = description;
@@ -426,7 +434,8 @@ exports.getProperties = async (req, res) => {
         if (expensesPrice) queryParams.expensesPrice = expensesPrice;
         if (status) queryParams.status = status;
 
-        console.log(queryParams)
+        console.log(queryParams);
+
         const properties = await Properties.find(queryParams);
         res.status(200).json({ success: true, properties });
     }
