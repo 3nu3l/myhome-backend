@@ -377,9 +377,16 @@
             "type": "string"
           },
           {
-            "name": "geolocation",
+            "name": "latitude",
             "in": "query",
-            "description": "Filter by property geolocation.",
+            "description": "Filter by property latitude.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "longitude",
+            "in": "query",
+            "description": "Filter by property longitude.",
             "required": false,
             "type": "string"
           },
@@ -514,6 +521,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"

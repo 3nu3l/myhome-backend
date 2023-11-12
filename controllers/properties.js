@@ -247,9 +247,15 @@ exports.getProperties = async (req, res) => {
             required: false,
             type: "string"
         }
-        #swagger.parameters['geolocation'] = {
+        #swagger.parameters['latitude'] = {
             in: 'query',
-            description: "Filter by property geolocation.",
+            description: "Filter by property latitude.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['longitude'] = {
+            in: 'query',
+            description: "Filter by property longitude.",
             required: false,
             type: "string"
         }
@@ -361,7 +367,8 @@ exports.getProperties = async (req, res) => {
     const {
         description,
         associatedRealEstate,
-        geolocation,
+        latitude,
+        longitude,
         rooms,
         bedrooms,
         bathrooms,
@@ -409,9 +416,11 @@ exports.getProperties = async (req, res) => {
         if (semiCovered) queryParams[`squareMeters.${'semiCovered'}`] = semiCovered;
         if (uncovered) queryParams[`squareMeters.${'uncovered'}`] = uncovered;
 
+        if (latitude) queryParams[`geolocation.${'latitude'}`] = latitude;
+        if (longitude) queryParams[`geolocation.${'longitude'}`] = longitude;
+
         if (description) queryParams.description = description;
         if (associatedRealEstate) queryParams.associatedRealEstate = associatedRealEstate;
-        //if (geolocation) queryParams.geolocation = geolocation;
         if (rooms) queryParams.rooms = rooms;
         if (bedrooms) queryParams.bedrooms = bedrooms;
         if (bathrooms) queryParams.bathrooms = bathrooms;
@@ -434,7 +443,12 @@ exports.getProperties = async (req, res) => {
         console.log(queryParams);
 
         const properties = await Properties.find(queryParams);
-        res.status(200).json({ success: true, properties });
+        if (properties.length === 0) {
+            res.status(404).json({ success: false, message: "No se encontraron propiedades con los criterios de búsqueda" });
+        }
+        else {
+            res.status(200).json({ success: true, properties });
+        }
     }
 
     catch (error) {
