@@ -356,6 +356,27 @@
             "type": "string"
           },
           {
+            "name": "covered",
+            "in": "query",
+            "description": "Filter by square meters covered of the property.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "semiCovered",
+            "in": "query",
+            "description": "Filter by square meters semiCovered of the property.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "uncovered",
+            "in": "query",
+            "description": "Filter by square meters uncovered of the property.",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "geolocation",
             "in": "query",
             "description": "Filter by property geolocation.",
@@ -426,13 +447,6 @@
             "type": "string"
           },
           {
-            "name": "squareMeters",
-            "in": "query",
-            "description": "Filter by square meters of the property.",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "frontOrBack",
             "in": "query",
             "description": "Filter by property facing front or back.",
@@ -489,7 +503,7 @@
             "type": "string"
           },
           {
-            "name": "address",
+            "name": "squareMeters",
             "in": "query",
             "type": "string"
           }

@@ -187,56 +187,66 @@ exports.getProperties = async (req, res) => {
             required: false,
             type: "string"
         }
-
         #swagger.parameters['number'] = {
             in: 'query',
             description: "Filter by street number in the properties address.",
             required: false,
             type: "string"
         }
-
         #swagger.parameters['floor'] = {
             in: 'query',
             description: "Filter by floor in the properties address.",
             required: false,
             type: "string"
         }
-
         #swagger.parameters['department'] = {
             in: 'query',
             description: "Filter by department in the properties address.",
             required: false,
             type: "string"
         }
-
         #swagger.parameters['district'] = {
             in: 'query',
             description: "Filter by district in the properties address.",
             required: false,
             type: "string"
         }
-
         #swagger.parameters['town'] = {
             in: 'query',
             description: "Filter by town in the properties address.",
             required: false,
             type: "string"
         }
-
         #swagger.parameters['province'] = {
             in: 'query',
             description: "Filter by province in the properties address.",
             required: false,
             type: "string"
         }
-
         #swagger.parameters['country'] = {
             in: 'query',
             description: "Filter by country in the properties address.",
             required: false,
             type: "string"
         }
-
+        #swagger.parameters['covered'] = {
+            in: 'query',
+            description: "Filter by square meters covered of the property.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['semiCovered'] = {
+            in: 'query',
+            description: "Filter by square meters semiCovered of the property.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['uncovered'] = {
+            in: 'query',
+            description: "Filter by square meters uncovered of the property.",
+            required: false,
+            type: "string"
+        }
         #swagger.parameters['geolocation'] = {
             in: 'query',
             description: "Filter by property geolocation.",
@@ -297,13 +307,6 @@ exports.getProperties = async (req, res) => {
             required: false,
             type: "string"
         }
-        #swagger.parameters['squareMeters'] = {
-            in: 'query',
-            description: "Filter by square meters of the property.",
-            required: false,
-            type: "string"
-        }
-
         #swagger.parameters['frontOrBack'] = {
             in: 'query',
             description: "Filter by property facing front or back.",
@@ -384,33 +387,27 @@ exports.getProperties = async (req, res) => {
         district,
         town,
         province,
-        country
+        country,
+        covered,
+        semiCovered,
+        uncovered
     } = req.query;
 
     try {
         let queryParams = {};
-        let addressParams = {};
 
-        const addressFields = [
-            'street',
-            'number',
-            'floor',
-            'department',
-            'district',
-            'town',
-            'province',
-            'country',
-        ];
+        if (street) queryParams[`address.${'street'}`] = street;
+        if (number) queryParams[`address.${'number'}`] = number;
+        if (floor) queryParams[`address.${'floor'}`] = floor;
+        if (department) queryParams[`address.${'department'}`] = department;
+        if (district) queryParams[`address.${'district'}`] = district;
+        if (town) queryParams[`address.${'town'}`] = town;
+        if (province) queryParams[`address.${'province'}`] = province;
+        if (country) queryParams[`address.${'country'}`] = country;
 
-        addressFields.forEach((field) => {
-            if (req.query.address && req.query.address[field]) {
-                addressParams[field] = req.query.address[field];
-            }
-        });
-
-        if (Object.keys(addressParams).length > 0) {
-            queryParams.address = addressParams;
-        }
+        if (covered) queryParams[`squareMeters.${'covered'}`] = covered;
+        if (semiCovered) queryParams[`squareMeters.${'semiCovered'}`] = semiCovered;
+        if (uncovered) queryParams[`squareMeters.${'uncovered'}`] = uncovered;
 
         if (description) queryParams.description = description;
         if (associatedRealEstate) queryParams.associatedRealEstate = associatedRealEstate;
