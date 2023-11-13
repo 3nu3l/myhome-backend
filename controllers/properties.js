@@ -1,7 +1,6 @@
-const jwt = require('jsonwebtoken');
 const Properties = require('../models/properties');
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const uploadFileS3 = require('../middlewares/config/upload-s3');
 
 exports.createProperty = async (req, res) => {
     /*  
@@ -101,6 +100,7 @@ exports.createProperty = async (req, res) => {
 
     const {
         description,
+        currency,
         associatedRealEstate,
         address,
         geolocation,
@@ -134,6 +134,7 @@ exports.createProperty = async (req, res) => {
 
         const newProperty = await Properties({
             description,
+            currency,
             associatedRealEstate,
             address,
             geolocation,
@@ -166,12 +167,52 @@ exports.createProperty = async (req, res) => {
 
 };
 
+exports.uploadPhotoProperty = async (req, res) => {
+    /*
+        #swagger.description = Upload photo
+        #swagger.consumes = ['multipart/form-data']  
+        #swagger.parameters['id'] = {
+            in: 'path',
+            description: "Property ID.",
+            required: true,
+            type: "number"
+        }
+        #swagger.parameters['photo'] = {
+            in: 'formData',
+            description: "Photo to upload",
+            required: true,
+            type: "file"
+        }
+        #swagger.tags = ['Properties']
+    */
+    const bucketName = process.env.AWS_S3_BUCKET_NAME
+    const file = req.formData.photo;
+    const id = req.path.id
+    const fileName = file.name;
+    const photo = "properties/" + id + "/" + fileName;
+
+    uploadFileS3(bucketName, file, fileName)
+    console.log(uploadFileS3)
+}
+
 exports.getProperties = async (req, res) => {
     /*  
         #swagger.description = Obtain a property with parameters.
         #swagger.parameters['description'] = {
             in: 'query',
             description: "Filter by property description.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['id'] = {
+            in: 'query',
+            description: "Filter by ID.",
+            required: false,
+            type: "string"
+        }
+        #swagger.parameters['currency'] = {
+            in: 'query',
+            description: "Filter by currency type (ars or usd).",
             required: false,
             type: "string"
         }
@@ -366,6 +407,8 @@ exports.getProperties = async (req, res) => {
 
     const {
         description,
+        id,
+        currency,
         associatedRealEstate,
         latitude,
         longitude,
@@ -420,6 +463,8 @@ exports.getProperties = async (req, res) => {
         if (longitude) queryParams[`geolocation.${'longitude'}`] = longitude;
 
         if (description) queryParams.description = description;
+        if (id) queryParams._id = id;
+        if (currency) queryParams.currency = currency;
         if (associatedRealEstate) queryParams.associatedRealEstate = associatedRealEstate;
         if (rooms) queryParams.rooms = rooms;
         if (bedrooms) queryParams.bedrooms = bedrooms;
@@ -575,7 +620,7 @@ exports.deleteProperty = async (req, res) => {
             return res.status(404).json({ success: false, message: "No se encuentra la propiedad con ID: " + id });
         }
 
-        res.status(202).json({ success: true, message: "Se borró la propiedad con id: " + id});
+        res.status(202).json({ success: true, message: "Se borró la propiedad con id: " + id });
     } catch (error) {
         res.status(500).json({ success: false, message: "Error borrando propiedad: " + error });
     }
