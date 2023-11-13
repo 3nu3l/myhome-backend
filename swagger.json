@@ -693,14 +693,197 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Fields to update.",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "key": {
+                "currency": {
                   "type": "string",
-                  "example": "value"
+                  "enum": [
+                    "ars",
+                    "usd"
+                  ]
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Una descripción detallada de la propiedad."
+                },
+                "associatedRealEstate": {
+                  "type": "string",
+                  "example": "email@inmobiliaria.com (se obtiene del usuario logueado con rol business)"
+                },
+                "address": {
+                  "type": "object",
+                  "properties": {
+                    "street": {
+                      "type": "string",
+                      "example": "Calle Falsa"
+                    },
+                    "number": {
+                      "type": "string",
+                      "example": "123"
+                    },
+                    "floor": {
+                      "type": "string",
+                      "example": "4"
+                    },
+                    "department": {
+                      "type": "string",
+                      "example": "A"
+                    },
+                    "district": {
+                      "type": "string",
+                      "example": "Distrito Central"
+                    },
+                    "town": {
+                      "type": "string",
+                      "example": "Ciudad Gótica"
+                    },
+                    "province": {
+                      "type": "string",
+                      "example": "Provincia"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "País"
+                    }
+                  }
+                },
+                "geolocation": {
+                  "type": "object",
+                  "properties": {
+                    "latitude": {
+                      "type": "string",
+                      "example": "-34.603722"
+                    },
+                    "longitude": {
+                      "type": "string",
+                      "example": "-58.381592"
+                    }
+                  }
+                },
+                "rooms": {
+                  "type": "string",
+                  "example": "5"
+                },
+                "bedrooms": {
+                  "type": "string",
+                  "example": "3"
+                },
+                "bathrooms": {
+                  "type": "string",
+                  "example": "2"
+                },
+                "hasTerrace": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "hasBalcony": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "garage": {
+                  "type": "string",
+                  "example": "1"
+                },
+                "hasStorageRoom": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "age": {
+                  "type": "string",
+                  "example": "20"
+                },
+                "propertyType": {
+                  "type": "string",
+                  "enum": [
+                    "casa",
+                    "ph",
+                    "departamento",
+                    "local",
+                    "oficina",
+                    "galpon",
+                    "terreno"
+                  ]
+                },
+                "squareMeters": {
+                  "type": "object",
+                  "properties": {
+                    "covered": {
+                      "type": "string",
+                      "example": "100"
+                    },
+                    "semiCovered": {
+                      "type": "string",
+                      "example": "50"
+                    },
+                    "uncovered": {
+                      "type": "string",
+                      "example": "30"
+                    }
+                  }
+                },
+                "frontOrBack": {
+                  "type": "string",
+                  "enum": [
+                    "frente",
+                    "contrafrente"
+                  ]
+                },
+                "orientation": {
+                  "type": "string",
+                  "enum": [
+                    "norte",
+                    "sur",
+                    "este",
+                    "oeste"
+                  ]
+                },
+                "amenities": {
+                  "type": "array",
+                  "example": [
+                    "quincho",
+                    "pileta",
+                    "jacuzzi",
+                    "sauna",
+                    "SUM",
+                    "sala de juegos"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "photos": {
+                  "type": "array",
+                  "example": [
+                    "http://example.com/photo1.jpg",
+                    "http://example.com/photo2.jpg"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "video": {
+                  "type": "string",
+                  "example": "http://example.com/videotour.mp4"
+                },
+                "price": {
+                  "type": "string",
+                  "example": "250000.00"
+                },
+                "expensesPrice": {
+                  "type": "string",
+                  "example": "5000.00"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "en alquiler",
+                    "en venta",
+                    "reservada",
+                    "alquilada",
+                    "vendida"
+                  ]
                 }
               }
             }
@@ -712,6 +895,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found"
@@ -1460,49 +1646,13 @@
         }
       }
     },
-    "/users/{id}/reset-password": {
-      "patch": {
+    "/users/forgot-password": {
+      "post": {
         "tags": [
           "Users"
         ],
-        "description": "Request password reset by email",
+        "description": "Generar y enviar OTP al correo electrónico del usuario.",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/users/{id}/reset-password/{token}": {
-      "patch": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Reset password with token",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "token",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
           {
             "name": "body",
             "in": "body",
@@ -1512,11 +1662,7 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "example": "review@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "my-new-password"
+                  "example": "usuario@example.com"
                 }
               }
             }
@@ -1529,8 +1675,50 @@
           "404": {
             "description": "Not Found"
           },
-          "409": {
-            "description": "Conflict"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/reset-password": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Validar el OTP y cambiar la contraseña del usuario.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "in": {
+                  "example": "any"
+                },
+                "required": {
+                  "example": "any"
+                },
+                "schema": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
