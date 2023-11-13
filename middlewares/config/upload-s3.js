@@ -1,8 +1,6 @@
 //import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3');
 
-var AWS = require("aws-sdk");
-
 exports.uploadFileS3 = async (bucketName, path, file) => {
     //export const uploadFileS3 = async (bucketName, path, file) => {
     const s3Config = {

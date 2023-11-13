@@ -199,7 +199,10 @@ exports.requestPasswordReset = async (req, res) => {
         }
       });
     }
-    return res.status(200).json({ success: true, message: "Se resetea contraseña de " + email });
+    const text="Click aquí para cambiar contraseña: " + process.env.URL_DASHBOARD + "/passwordRecovery/?recoveryToken=" + token
+    sendMail.send(email, "Solicitud de cambio de contraseña", text)
+    console.log("e-mail enviado para recuperar password del usuario " + email + ": " + text)
+    return res.status(200).json({ success: true, message: "Se envía email a " + email + " con link para el cambio de contraseña." });
   }
 };
 
