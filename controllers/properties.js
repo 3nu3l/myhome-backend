@@ -512,21 +512,127 @@ exports.updateProperty = async (req, res) => {
         }
         #swagger.parameters['body'] = {
             in: 'body',
-            description: "Fields to update.",
             required: true,
             schema: {
-                key: "value"
+                currency: {
+                    '@enum': [
+                        "ars",
+                        "usd"
+                    ]
+                },
+                description: "Una descripción detallada de la propiedad.",
+                associatedRealEstate: "email@inmobiliaria.com (se obtiene del usuario logueado con rol business)",
+                address: {
+                    street: "Calle Falsa",
+                    number: "123",
+                    floor: "4",
+                    department: "A",
+                    district: "Distrito Central",
+                    town: "Ciudad Gótica",
+                    province: "Provincia",
+                    country: "País"
+                },
+                geolocation: {
+                    latitude: "-34.603722",
+                    longitude: "-58.381592"
+                },
+                rooms: "5",
+                bedrooms: "3",
+                bathrooms: "2",
+                hasTerrace: true,
+                hasBalcony: false,
+                garage: "1",
+                hasStorageRoom: true,
+                age: "20",
+                propertyType: {
+                    '@enum': [
+                        "casa",
+                        "ph",
+                        "departamento",
+                        "local",
+                        "oficina",
+                        "galpon",
+                        "terreno"
+                    ]
+                },
+                squareMeters: {
+                    covered: "100",
+                    semiCovered: "50",
+                    uncovered: "30"
+                },
+                frontOrBack: {
+                    '@enum': [
+                        "frente",
+                        "contrafrente"
+                    ]
+                },
+                orientation: {
+                    '@enum': [
+                        "norte",
+                        "sur",
+                        "este",
+                        "oeste"
+                    ]
+                },
+                amenities: [
+                        "quincho",
+                        "pileta",
+                        "jacuzzi",
+                        "sauna",
+                        "SUM",
+                        "sala de juegos"
+                ],
+                photos: [
+                    "http://example.com/photo1.jpg",
+                    "http://example.com/photo2.jpg"
+                ],
+                video: "http://example.com/videotour.mp4",
+                price: "250000.00",
+                expensesPrice: "5000.00",
+                status: {
+                    '@enum': [
+                        "en alquiler",
+                        "en venta",
+                        "reservada",
+                        "alquilada",
+                        "vendida"
+                    ]
+                }
             }
         }
         #swagger.tags = ['Properties']
     */
-    const {
-        id,
-    } = req.path;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+
+    const propertyId = req.params.id;
+    const updatedFields = req.body;
+
+    try {
+        const email = updatedFields.associatedRealEstate;
+        const user = await User.findOne({ email }).select('role');
+
+        if (user.role != "business") {
+            return res.status(403).json({ success: false, message: "The user doesn't have permission to update properties. You'll need a business role." });
+        }
+
+        const updatedPropertyFields = {
+            ...updatedFields,
+            associatedRealEstate: email,
+        };
+
+        const updatedProperty = await Properties.findOneAndUpdate(
+            { _id: propertyId },
+            { $set: updatedPropertyFields },
+            { new: true }
+        );
+
+        if (!updatedProperty) {
+            return res.status(404).json({ success: false, message: "Property not found" });
+        }
+
+        res.status(200).json({ success: true, message: "Property updated successfully", property: updatedProperty });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error updating property: " + error.message });
     }
-    res.status(200).json({ success: true, message: "Dummy response" });
 };
 
 exports.updateFieldProperty = async (req, res) => {
