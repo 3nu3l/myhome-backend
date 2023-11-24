@@ -1691,17 +1691,21 @@
           {
             "name": "body",
             "in": "body",
+            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "in": {
-                  "example": "any"
+                "email": {
+                  "type": "string",
+                  "example": "usuario@example.com"
                 },
-                "required": {
-                  "example": "any"
+                "otp": {
+                  "type": "string",
+                  "example": "123456"
                 },
-                "schema": {
-                  "example": "any"
+                "newPassword": {
+                  "type": "string",
+                  "example": "nuevaContraseña123"
                 }
               }
             }

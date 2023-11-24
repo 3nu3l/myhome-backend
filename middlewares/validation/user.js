@@ -55,7 +55,7 @@ exports.validateGetUser = [
 ];
 
 exports.validateNewPassword = [
-  check('password')
+  check('newPassword')
     .trim()
     .not()
     .isEmpty()

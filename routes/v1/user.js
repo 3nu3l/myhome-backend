@@ -11,7 +11,7 @@ const {
   updateUser,
   updateFieldUser,
   getFavoriteProperties,
-  passwordReset,
+  validateOTPAndChangePassword,
   requestPasswordReset,
   deleteUser
 } = require('../../controllers/user');
@@ -29,8 +29,8 @@ router.post('/auths', cors(), userSignIn, validateUserSignIn, userValidation);
 router.get('/users', cors(), isAuth, userValidation, getUser)
 router.get('/users/properties', cors(), isAuth, getFavoriteProperties);
 router.put('/users/:id', cors(), isAuth, updateUser);
-router.patch('/users/:id/reset-password', cors(), requestPasswordReset)
-router.patch('/users/:id/reset-password/:token', cors(), passwordReset)
+router.post('/users/forgot-password', cors(), requestPasswordReset)
+router.post('/users/reset-password', cors(), validateNewPassword, userValidation, validateOTPAndChangePassword)
 router.patch('/users/:id', cors(), isAuth, updateFieldUser);
 router.delete('/auths', cors(), isAuth, signOut);
 router.delete('/users/:id', cors(), isAuth, deleteUser);

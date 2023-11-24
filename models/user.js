@@ -46,6 +46,9 @@ const userSchema = new mongoose.Schema({
   },
   comments: {
     type: String,
+  },
+  otp: {
+    type: String,
   }
 },
   {

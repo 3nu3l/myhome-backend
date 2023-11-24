@@ -169,72 +169,102 @@ exports.signOut = async (req, res) => {
   }
 };
 
-exports.requestPasswordReset = async (req, res) => {
-  /*  
-      #swagger.description = Request password reset by email
-      #swagger.tags = ['Users']
-  */
-  const email = req.params.email;
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(404).json({
-      success: false,
-      message: 'No se encuentra el usuario en la base de datos.',
-    });
-  }
-  else {
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_RESET_SECRET_KEY, {
-      expiresIn: '1800s',
-    });
-
-    const bearerToken = "Bearer " + token
-
-    let oldTokens = user.tokens || [];
-
-    if (oldTokens.length) {
-      oldTokens = oldTokens.filter(t => {
-        const timeDiff = (Date.now() - parseInt(t.signedAt)) / 1000;
-        if (timeDiff < 86400) {
-          return t;
-        }
-      });
-    }
-    return res.status(200).json({ success: true, message: "Se resetea contraseña de " + email });
-  }
+const generateSixDigitToken = () => {
+  const min = 100000;
+  const max = 999999;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-exports.passwordReset = async (req, res) => {
-  /*  #swagger.description = Reset password with token
+exports.requestPasswordReset = async (req, res) => {
+  /*  
+      #swagger.description = Generar y enviar OTP al correo electrónico del usuario.
       #swagger.parameters['body'] = {
           in: 'body',
           required: true,
           schema: {
-              email: "review@gmail.com",
-              password: "my-new-password"
+              email: "usuario@example.com"
           }
-      } 
+      }
       #swagger.tags = ['Users']
   */
-  const { email, password } = req.body;
-  const _user = await User.findOne({ email });
-  if (!_user) {
-    return res.status(404).json({
+  const { email } = req.body;
+
+  try {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    const user = await User.findOneAndUpdate(
+      { email },
+      { $set: { otp } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'No se encuentra el usuario en la base de datos.',
+      });
+    }
+
+    sendMail.send(email, 'Código de verificación', `Tu código de verificación es: ${otp}`);
+
+    return res.status(200).json({ success: true, message: 'Se ha enviado el OTP al correo electrónico del usuario.' });
+  } catch (error) {
+    return res.status(500).json({
       success: false,
-      message: 'No se encuentra el usuario en la base de datos.',
+      message: 'Error al generar y guardar el OTP en la base de datos: ' + error.message,
     });
   }
-  const newPasswordHash = await bcrypt.hash(password, 8);
-  const user = await User.findByIdAndUpdate(_user._id, { $set: { "password": newPasswordHash } });
-  if (!user) {
-    return res.status(409).json({
+}
+
+exports.validateOTPAndChangePassword = async (req, res) => {
+  /*  
+      #swagger.description = Validar el OTP y cambiar la contraseña del usuario.
+      #swagger.parameters['body'] = {
+          in: 'body',
+          required: true,
+          schema: {
+              email: "usuario@example.com",
+              otp: "123456", 
+              newPassword: "nuevaContraseña123" 
+          }
+      }
+      #swagger.tags = ['Users']
+  */
+  const { email, otp, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user || user.otp !== otp) {
+      return res.status(400).json({
+        success: false,
+        message: 'El OTP ingresado no es válido.',
+      });
+    }
+
+    const newPasswordHash = await bcrypt.hash(newPassword, 8);
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { $set: { password: newPasswordHash, otp: undefined } }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: 'No se encuentra el usuario en la base de datos o no se puede actualizar.',
+      });
+    }
+
+    return res.status(200).json({ success: true, message: 'Contraseña modificada exitosamente.' });
+  } catch (error) {
+    return res.status(500).json({
       success: false,
-      message: 'No se pudo modificar la contraseña del usuario ' + user.email,
+      message: 'Error al validar el OTP y cambiar la contraseña en la base de datos: ' + error.message,
     });
-  }
-  else {
-    return res.status(200).json({ success: true, message: "Contraseña modificada del usuario " + _user.email });
   }
 };
+
 
 exports.updateUser = async (req, res) => {
   /*  
