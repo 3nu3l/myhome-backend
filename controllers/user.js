@@ -78,7 +78,7 @@ exports.getUser = async (req, res) => {
     const favorites = await Favorites.findOne({ user: UserId }).select('properties');
     console.log(favorites)
     if (!favorites) {
-      return res.status(200).json({ success: true, user: user, favorites: "not found" });
+      return res.status(200).json({ success: true, user: user, favorites: "user has no favorites" });
     } else {
       return res.status(200).json({ success: true, user: user, favorites: favorites });
     }
