@@ -5,12 +5,9 @@ const router = express.Router();
 const {
   createUser,
   getUser,
-  getUsers,
   userSignIn,
   signOut,
-  updateUser,
   updateFieldUser,
-  getFavoriteProperties,
   validateOTPAndChangePassword,
   requestPasswordReset,
   deleteUser
@@ -20,20 +17,16 @@ const {
   validateUserSignUp,
   userValidation,
   validateUserSignIn,
-  validateGetUser,
   validateNewPassword
 } = require('../../middlewares/validation/user');
 
 router.post('/users', cors(), validateUserSignUp, userValidation, createUser);
 router.post('/auths', cors(), userSignIn, validateUserSignIn, userValidation);
 router.get('/users', cors(), isAuth, userValidation, getUser)
-router.get('/users/properties', cors(), isAuth, getFavoriteProperties);
-router.put('/users/:id', cors(), isAuth, updateUser);
 router.post('/users/forgot-password', cors(), requestPasswordReset)
 router.post('/users/reset-password', cors(), validateNewPassword, userValidation, validateOTPAndChangePassword)
 router.patch('/users/:id', cors(), isAuth, updateFieldUser);
 router.delete('/auths', cors(), isAuth, signOut);
 router.delete('/users/:id', cors(), isAuth, deleteUser);
-//router.get('/users/:email', cors(), isAuth, validateGetUser, userValidation, getUser)
 
 module.exports = router;

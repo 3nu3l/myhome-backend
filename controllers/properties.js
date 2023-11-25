@@ -660,7 +660,7 @@ exports.updateFieldProperty = async (req, res) => {
     if (id === "no existe") {
         res.status(404).json({ success: false, message: "Dummy response" })
     }
-    res.status(200).json({ success: true, message: "Dummy response" });
+    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.getAppointments = async (req, res) => {
@@ -681,7 +681,7 @@ exports.getAppointments = async (req, res) => {
         res.status(404).json({ success: false, message: "Dummy response" })
     }
 
-    res.status(200).json({ success: true, message: "Dummy response" });
+    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.createAppointments = async (req, res) => {

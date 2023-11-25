@@ -6,6 +6,7 @@ const userRouter = require('./routes/v1/user');
 const coreRouter = require('./routes/v1/core');
 const realeStateCompanies = require('./routes/v1/realeStateCompanies');
 const properties = require('./routes/v1/properties');
+const favorites = require('./routes/v1/favorites');
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json');
 const db = require('./middlewares/config/db');
@@ -21,13 +22,14 @@ app.use('/api/v1', userRouter);
 app.use('/api/v1', coreRouter);
 app.use('/api/v1', realeStateCompanies);
 app.use('/api/v1', properties);
+app.use('/api/v1', favorites);
 
 app.get('/', (req, res) => {
   res.redirect('/api/v1');
 });
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Methods", "*");
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization");
   next();

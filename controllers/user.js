@@ -177,7 +177,7 @@ const generateSixDigitToken = () => {
 
 exports.requestPasswordReset = async (req, res) => {
   /*  
-      #swagger.description = Generar y enviar OTP al correo electrónico del usuario.
+      #swagger.description = Request change password and get OTP by email.
       #swagger.parameters['body'] = {
           in: 'body',
           required: true,
@@ -218,7 +218,7 @@ exports.requestPasswordReset = async (req, res) => {
 
 exports.validateOTPAndChangePassword = async (req, res) => {
   /*  
-      #swagger.description = Validar el OTP y cambiar la contraseña del usuario.
+      #swagger.description = Validate OTP and change user password.
       #swagger.parameters['body'] = {
           in: 'body',
           required: true,
@@ -265,43 +265,6 @@ exports.validateOTPAndChangePassword = async (req, res) => {
   }
 };
 
-
-exports.updateUser = async (req, res) => {
-  /*  
-      #swagger.description = Update a user.
-      #swagger.parameters['id'] = {
-          in: 'path',
-          description: "User ID.",
-          required: true,
-          type: "number"
-      }
-      #swagger.parameters['body'] = {
-          in: 'body',
-          description: "Fields to update.",
-          required: true,
-          schema: {
-              key: "value"
-          }
-      }
-      #swagger.tags = ['Users']
-  */
-  const {
-    id,
-  } = req.path;
-  if (id === "no existe") {
-    res.status(404).json({ success: false, message: "Dummy response" })
-  }
-
-  const {
-    field,
-  } = req.body;
-  if (field === "no existe") {
-    res.status(409).json({ success: false, message: "Dummy response" })
-  }
-
-  res.status(200).json({ success: true, message: "Dummy response" });
-};
-
 exports.updateFieldUser = async (req, res) => {
   /*  
       #swagger.description = Update a field for a user.
@@ -335,27 +298,7 @@ exports.updateFieldUser = async (req, res) => {
     res.status(409).json({ success: false, message: "Dummy response" })
   }
 
-  res.status(200).json({ success: true, message: "Dummy response" });
-};
-
-exports.getFavoriteProperties = async (req, res) => {
-  /*  
-      #swagger.description = Obtain favorite properties for a user.
-      #swagger.parameters['id'] = {
-          in: 'query',
-          description: "User ID for get favorite properties.",
-          required: true,
-          type: "number"
-      }
-      #swagger.tags = ['Users']
-  */
-  const {
-    id,
-  } = req.query;
-  if (id === "no existe") {
-    res.status(404).json({ success: false, message: "Dummy response" })
-  }
-  res.status(200).json({ success: true, message: "Dummy response" });
+  res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.deleteUser = async (req, res) => {

@@ -69,7 +69,7 @@ exports.getRSC = async (req, res) => {
     if (id === "no existe") {
         res.status(404).json({ success: false, message: "Dummy response" })
     }
-    res.status(200).json({ success: true, message: "Dummy response" });
+    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.getOwnProperties = async (req, res) => {
@@ -89,7 +89,7 @@ exports.getOwnProperties = async (req, res) => {
     if (id === "no existe") {
         res.status(404).json({ success: false, message: "Dummy response" })
     }
-    res.status(200).json({ success: true, message: "Dummy response" });
+    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.updateRSC = async (req, res) => {
@@ -125,7 +125,7 @@ exports.updateRSC = async (req, res) => {
         res.status(409).json({ success: false, message: "Dummy response" })
     }
 
-    res.status(200).json({ success: true, message: "Dummy response" });
+    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.updateFieldRSC = async (req, res) => {
@@ -161,7 +161,7 @@ exports.updateFieldRSC = async (req, res) => {
         res.status(409).json({ success: false, message: "Dummy response" })
     }
 
-    res.status(200).json({ success: true, message: "Dummy response" });
+    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.getAppointments = async (req, res) => {
@@ -182,7 +182,7 @@ exports.getAppointments = async (req, res) => {
         res.status(404).json({ success: false, message: "Dummy response" })
     }
 
-    res.status(200).json({ success: true, message: "Dummy response" });
+    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.deleteRSC = async (req, res) => {
