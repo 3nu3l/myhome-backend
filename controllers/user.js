@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Favorites = require('../models/favorites');
 const bcrypt = require('bcrypt');
 const sendMail = require('./email');
 
@@ -63,8 +64,8 @@ exports.getUser = async (req, res) => {
       }
       #swagger.tags = ['Users']
   */
-  const email = req.params.email;
-  const user = await User.findOne({ email }).select('email');
+  const email = req.query.email;
+  const user = await User.findOne({ email }).select('-password');
   if (!user) {
     return res.status(404).json({
       success: false,
@@ -72,7 +73,15 @@ exports.getUser = async (req, res) => {
     });
   }
   else {
-    return res.status(200).json({ success: true, user: user });
+    const UserId = user._id.toString();
+    console.log(UserId)
+    const favorites = await Favorites.findOne({ user: UserId }).select('properties');
+    console.log(favorites)
+    if (!favorites) {
+      return res.status(200).json({ success: true, user: user });
+    } else {
+      return res.status(200).json({ success: true, user: user, favorites: favorites });
+    }
   }
 };
 
