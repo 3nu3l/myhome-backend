@@ -7,7 +7,6 @@ exports.send = async (email, subject, text) => {
             to: email,
             subject: subject,
             text: text
-            //html: "<b>Hello world?</b>", // html body
         });
     }
     catch (error) {
