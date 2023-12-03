@@ -1,7 +1,7 @@
 const Properties = require('../models/properties');
 const User = require('../models/user');
 const Appointment = require('../models/appointment');
-const uploadFileS3 = require('../middlewares/config/upload-s3');
+const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3');
 
 exports.createProperty = async (req, res) => {
     /*  
@@ -186,14 +186,34 @@ exports.uploadPhotoProperty = async (req, res) => {
         }
         #swagger.tags = ['Properties']
     */
+    const s3Config = {
+        credentials: {
+            accessKeyId: process.env.AWS_S3_ACCESS_KEY,
+            secretAccessKey: process.env.AWS_S3_ACCESS_SECRET,
+        },
+        region: "sa-east-1",
+    };
     const bucketName = process.env.AWS_S3_BUCKET_NAME
-    const file = req.formData.photo;
-    const id = req.path.id
-    const fileName = file.name;
-    const photo = "properties/" + id + "/" + fileName;
+    const file = req.file;
+    const id = req.params.id;
+    const fileName = file.originalname;
+    const photoPath = "properties/" + id + "/" + fileName;
 
-    uploadFileS3(bucketName, file, fileName)
-    console.log(uploadFileS3)
+    const s3Client = new S3Client(s3Config);
+
+    try {
+        const commandS3 = new PutObjectCommand({
+            Bucket: bucketName,
+            Key: photoPath,
+            Body: file.buffer,
+            ServerSideEncryption: "AES256",
+        });
+        await s3Client.send(commandS3);
+        const imageUrl = `https://${bucketName}.s3.${s3Config.region}.amazonaws.com/${photoPath}`;
+        res.status(200).json({ success: true, message: 'Foto subida exitosamente', urlImage: imageUrl });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error al subir la foto: ' + error.message });
+    }
 }
 
 exports.getProperties = async (req, res) => {

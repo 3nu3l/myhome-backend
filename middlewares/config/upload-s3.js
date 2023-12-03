@@ -1,8 +1,6 @@
-//import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 const { PutObjectCommand, S3Client } = require('@aws-sdk/client-s3');
 
-exports.uploadFileS3 = async (bucketName, path, file) => {
-    //export const uploadFileS3 = async (bucketName, path, file) => {
+const uploadFileS3 = async (bucketName, path, file) => {
     const s3Config = {
         accessKeyId: process.env.AWS_ACCESS_KEY,
         secretAccessKey: process.env.AWS_ACCESS_SECRET,
@@ -26,3 +24,4 @@ exports.uploadFileS3 = async (bucketName, path, file) => {
     }
 };
 
+module.exports = { uploadFileS3 };
