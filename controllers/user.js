@@ -76,27 +76,11 @@ exports.getUser = async (req, res) => {
     const UserId = user._id.toString();
     const favorites = await Favorites.findOne({ user: UserId }).select('properties');
     if (!favorites) {
-      return res.status(200).json({ success: true, user: user, favorites: "user has no favorites" });
+      return res.status(200).json({ success: true, user: user, favorites: "El usuario no tiene favoritos" });
     } else {
       return res.status(200).json({ success: true, user: user, favorites: favorites });
     }
   }
-};
-
-exports.getUsers = async (req, res) => {
-  /*  
-      #swagger.description = Get all users
-      #swagger.tags = ['Users']
-  */
-  const users = await User.find({}).select('-password');
-
-  if (users.length === 0)
-    return res.status(404).json({
-      success: false,
-      message: 'No se encuentran usuarios en la base de datos',
-    });
-
-  res.json({ success: true, user: users });
 };
 
 exports.userSignIn = async (req, res) => {
@@ -176,12 +160,6 @@ exports.signOut = async (req, res) => {
   }
 };
 
-const generateSixDigitToken = () => {
-  const min = 100000;
-  const max = 999999;
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
 exports.requestPasswordReset = async (req, res) => {
   /*  
       #swagger.description = Request change password and get OTP by email.
@@ -212,7 +190,7 @@ exports.requestPasswordReset = async (req, res) => {
       });
     }
 
-    sendMail.send(email, 'Código de verificación', `Tu código de verificación es: ${otp}`);
+    await sendMail.send(email, 'Código de verificación', `Tu código de verificación es: ${otp}`);
 
     return res.status(200).json({ success: true, message: 'Se ha enviado el OTP al correo electrónico del usuario.' });
   } catch (error) {
@@ -286,26 +264,27 @@ exports.updateFieldUser = async (req, res) => {
           description: "Field to update.",
           required: true,
           schema: {
-              key: "value"
+              firstName: "Pepe",
+              lastName: "Argento",
+              email: "review@gmail.com",
+              password: ""
           }
       }
       #swagger.tags = ['Users']
   */
-  const {
-    id,
-  } = req.path;
-  if (id === "no existe") {
-    res.status(404).json({ success: false, message: "Dummy response" })
-  }
+  const { id } = req.params;
 
-  const {
-    field,
-  } = req.body;
-  if (field === "no existe") {
-    res.status(409).json({ success: false, message: "Dummy response" })
+  try {
+    const user = await User.findOne({ _id: id }).select('-password');
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" }); q
+    }
+    else {
+      return res.status(200).json({ success: true, message: user });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Error retrieving users" });
   }
-
-  res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.deleteUser = async (req, res) => {

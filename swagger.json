@@ -1762,9 +1762,21 @@
             "schema": {
               "type": "object",
               "properties": {
-                "key": {
+                "firstName": {
                   "type": "string",
-                  "example": "value"
+                  "example": "Pepe"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Argento"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "review@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": ""
                 }
               }
             }
@@ -1779,9 +1791,6 @@
           },
           "404": {
             "description": "Not Found"
-          },
-          "409": {
-            "description": "Conflict"
           },
           "500": {
             "description": "Internal Server Error"
