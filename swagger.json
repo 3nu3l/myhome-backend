@@ -740,7 +740,7 @@
         "tags": [
           "Properties"
         ],
-        "description": "Create a appointment",
+        "description": "Create an appointment for a property.",
         "parameters": [
           {
             "name": "authorization",
@@ -752,14 +752,22 @@
           {
             "name": "body",
             "in": "body",
-            "description": "Appointment to create",
+            "description": "Appointment to create.",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "key": {
+                "propertyId": {
                   "type": "string",
-                  "example": "value"
+                  "example": "1"
+                },
+                "date": {
+                  "type": "string",
+                  "example": "2023-07-15T14:00:00Z"
+                },
+                "clientId": {
+                  "type": "string",
+                  "example": "123"
                 }
               }
             }
@@ -772,9 +780,6 @@
           "401": {
             "description": "Unauthorized"
           },
-          "409": {
-            "description": "Conflict"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -784,7 +789,7 @@
         "tags": [
           "Properties"
         ],
-        "description": "Get appointments for a property",
+        "description": "Obtener citas para una propiedad.",
         "parameters": [
           {
             "name": "authorization",
@@ -796,9 +801,23 @@
           {
             "name": "PropertyID",
             "in": "query",
-            "description": "Property ID.",
+            "description": "ID de la propiedad para la cual se buscan citas.",
             "required": true,
-            "type": "number"
+            "type": "string"
+          },
+          {
+            "name": "clientId",
+            "in": "query",
+            "description": "ID del cliente para filtrar citas.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Fecha de la cita para filtrar citas. Formato YYYY-MM-DD.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -1101,7 +1120,7 @@
         "tags": [
           "Properties"
         ],
-        "description": "Update a field for a property",
+        "description": "Update a field for a property.",
         "parameters": [
           {
             "name": "id",
@@ -1353,7 +1372,7 @@
         "tags": [
           "Real State Companies"
         ],
-        "description": "Update a real estate company",
+        "description": "Update a real estate company.",
         "parameters": [
           {
             "name": "id",
@@ -1395,9 +1414,6 @@
           "404": {
             "description": "Not Found"
           },
-          "409": {
-            "description": "Conflict"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -1407,7 +1423,7 @@
         "tags": [
           "Real State Companies"
         ],
-        "description": "Update a field for a real estate company",
+        "description": "Update a field for a real estate company.",
         "parameters": [
           {
             "name": "id",
@@ -1449,9 +1465,6 @@
           "404": {
             "description": "Not Found"
           },
-          "409": {
-            "description": "Conflict"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -1461,7 +1474,7 @@
         "tags": [
           "Real State Companies"
         ],
-        "description": "Delete a real estate company",
+        "description": "Delete a real estate company.",
         "parameters": [
           {
             "name": "id",
@@ -1479,8 +1492,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"

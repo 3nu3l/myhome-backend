@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const Property = require('../models/properties');
 const sendMail = require('./email');
+const Appointment = require('../models/appointment');
+
 
 exports.createRSC = async (req, res) => {
     /*  
@@ -41,7 +42,7 @@ exports.createRSC = async (req, res) => {
         role
     });
     try {
-        sendMail.send(email, "Bienvenido " + fantasyName + " a My Home", "Bienvenido! Se creó la cuenta con éxito, ya podés crear propiedades.")
+        await sendMail.send(email, "Bienvenido " + fantasyName + " a My Home", "Bienvenido! Se creó la cuenta con éxito, ya podés crear propiedades.")
     } catch (error) {
         return res.status(409).json({
             success: false,
@@ -54,154 +55,161 @@ exports.createRSC = async (req, res) => {
 
 exports.getRSC = async (req, res) => {
     /*  
-        #swagger.description = Obtain a real state company with ID.
+        #swagger.description = 'Obtain a real state company with ID.'
         #swagger.parameters['id'] = {
             in: 'query',
-            description: "Real State Company ID.",
+            description: 'Real State Company ID.',
             required: true,
-            type: "number"
+            type: 'number'
         }
         #swagger.tags = ['Real State Companies']
     */
-    const {
-        id,
-    } = req.query;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+    const { id } = req.query;
+    try {
+        const rsc = await User.findById(id);
+        if (!rsc) {
+            return res.status(404).json({ success: false, message: "Compañía inmobiliaria no encontrada" });
+        }
+        return res.status(200).json({ success: true, rsc });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error al obtener la compañía inmobiliaria: " + error.message });
     }
-    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.getOwnProperties = async (req, res) => {
     /*  
-        #swagger.description = Obtain properties for a real state company.
+        #swagger.description = 'Obtain properties for a real state company.'
         #swagger.parameters['id'] = {
             in: 'query',
-            description: "Real State Company ID for get own properties.",
+            description: 'Real State Company ID for get own properties.',
             required: true,
-            type: "number"
+            type: 'number'
         }
         #swagger.tags = ['Real State Companies']
     */
-    const {
-        id,
-    } = req.query;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+    const { id } = req.query;
+    try {
+        const properties = await Property.find({ owner: id });
+        if (!properties) {
+            return res.status(404).json({ success: false, message: "No se encontraron propiedades para esta compañía inmobiliaria" });
+        }
+        return res.status(200).json({ success: true, properties });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error al obtener las propiedades: " + error.message });
     }
-    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.updateRSC = async (req, res) => {
     /*  
-        #swagger.description = Update a real estate company
+        #swagger.description = 'Update a real estate company.'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: "Real State Company ID.",
+            description: 'Real State Company ID.',
             required: true,
-            type: "number"
+            type: 'number'
         }
         #swagger.parameters['body'] = {
             in: 'body',
-            description: "Fields to update.",
+            description: 'Fields to update.',
             required: true,
-            schema: {
-                key: "value"
-            }
+            schema: { key: 'value' }
         }
         #swagger.tags = ['Real State Companies']
     */
-    const {
-        id,
-    } = req.path;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+    const { id } = req.params;
+    const updateData = req.body;
+    try {
+        const updatedRSC = await User.findByIdAndUpdate(id, updateData, { new: true });
+        if (!updatedRSC) {
+            return res.status(404).json({ success: false, message: "Compañía inmobiliaria no encontrada" });
+        }
+        return res.status(200).json({ success: true, updatedRSC });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error al actualizar la compañía inmobiliaria: " + error.message });
     }
-
-    const {
-        field,
-    } = req.body;
-    if (field === "no existe") {
-        res.status(409).json({ success: false, message: "Dummy response" })
-    }
-
-    res.status(200).json({ success: true, message: "Method not allowed" });
 };
+
 
 exports.updateFieldRSC = async (req, res) => {
     /*  
-        #swagger.description = Update a field for a real estate company
+        #swagger.description = 'Update a field for a real estate company.'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: "Real State Company ID.",
+            description: 'Real State Company ID.',
             required: true,
-            type: "number"
+            type: 'number'
         }
         #swagger.parameters['body'] = {
             in: 'body',
-            description: "Field to update.",
+            description: 'Field to update.',
             required: true,
-            schema: {
-                key: "value"
-            }
+            schema: { key: 'value' }
         }
         #swagger.tags = ['Real State Companies']
     */
-    const {
-        id,
-    } = req.path;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
-    }
+    const { id } = req.params;
+    const updateData = req.body;
 
-    const {
-        field,
-    } = req.body;
-    if (field === "no existe") {
-        res.status(409).json({ success: false, message: "Dummy response" })
-    }
+    try {
+        const rsc = await User.findById(id);
+        if (!rsc) {
+            return res.status(404).json({ success: false, message: "Compañía inmobiliaria no encontrada" });
+        }
 
-    res.status(200).json({ success: true, message: "Method not allowed" });
+        Object.keys(updateData).forEach(key => {
+            rsc[key] = updateData[key];
+        });
+
+        await rsc.save();
+
+        return res.status(200).json({ success: true, message: "Campo actualizado exitosamente", rsc });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error al actualizar el campo de la compañía inmobiliaria: " + error.message });
+    }
 };
 
 exports.getAppointments = async (req, res) => {
     /*  
-        #swagger.description = Get appointments for a real state company.
+        #swagger.description = 'Get appointments for a real state company.'
         #swagger.parameters['RealStateID'] = {
             in: 'query',
-            description: "Real State Company ID.",
+            description: 'Real State Company ID.',
             required: true,
-            type: "number"
+            type: 'number'
         }
         #swagger.tags = ['Real State Companies']
     */
-    const {
-        RealStateID
-    } = req.query;
-    if (RealStateID === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+    const { RealStateID } = req.query;
+    try {
+        const appointments = await Appointment.find({ realStateCompany: RealStateID });
+        if (!appointments) {
+            return res.status(404).json({ success: false, message: "No se encontraron citas para esta compañía inmobiliaria" });
+        }
+        return res.status(200).json({ success: true, appointments });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error al obtener las citas: " + error.message });
     }
-
-    res.status(200).json({ success: true, message: "Method not allowed" });
 };
 
 exports.deleteRSC = async (req, res) => {
     /*  
-        #swagger.description = Delete a real estate company
+        #swagger.description = 'Delete a real estate company.'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: "Real State Company ID.",
+            description: 'Real State Company ID.',
             required: true,
-            type: "number"
+            type: 'number'
         }
         #swagger.tags = ['Real State Companies']
     */
-    const {
-        id,
-    } = req.path;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+    const { id } = req.params;
+    try {
+        const deletedRSC = await User.findByIdAndDelete(id);
+        if (!deletedRSC) {
+            return res.status(404).json({ success: false, message: "Compañía inmobiliaria no encontrada" });
+        }
+        return res.status(200).json({ success: true, message: "Compañía inmobiliaria eliminada exitosamente" });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Error al eliminar la compañía inmobiliaria: " + error.message });
     }
-
-    res.status(204).json({ success: true, message: "Dummy response" });
 };

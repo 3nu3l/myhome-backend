@@ -42,7 +42,7 @@ exports.createUser = async (req, res) => {
     role
   });
   try {
-    sendMail.send(email, "Bienvenido " + firstName + " a My Home", "Bienvenido! Se creó la cuenta con éxito.")
+    await sendMail.send(email, "Bienvenido " + firstName + " a My Home", "Bienvenido! Se creó la cuenta con éxito.")
   } catch (error) {
     return res.status(409).json({
       success: false,
@@ -308,7 +308,7 @@ exports.deleteUser = async (req, res) => {
 
     await Favorites.deleteMany({ user: id });
 
-    await user.remove(); 
+    await user.remove();
     return res.status(200).json({ success: true, message: "Usuario eliminado exitosamente" });
   } catch (error) {
     return res.status(500).json({ success: false, message: "Error al eliminar el usuario: " + error.message });

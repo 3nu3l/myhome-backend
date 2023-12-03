@@ -1,5 +1,6 @@
 const Properties = require('../models/properties');
 const User = require('../models/user');
+const Appointment = require('../models/appointment');
 const uploadFileS3 = require('../middlewares/config/upload-s3');
 
 exports.createProperty = async (req, res) => {
@@ -637,74 +638,108 @@ exports.updateProperty = async (req, res) => {
 
 exports.updateFieldProperty = async (req, res) => {
     /*  
-        #swagger.description = Update a field for a property
+        #swagger.description = 'Update a field for a property.'
         #swagger.parameters['id'] = {
             in: 'path',
-            description: "Property ID.",
+            description: 'Property ID.',
             required: true,
-            type: "number"
+            type: 'number'
         }
         #swagger.parameters['body'] = {
             in: 'body',
-            description: "Field to update.",
+            description: 'Field to update.',
             required: true,
-            schema: {
-                key: "value"
-            }
+            schema: { key: 'value' }
         }
         #swagger.tags = ['Properties']
     */
-    const {
-        id,
-    } = req.path;
-    if (id === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
+    const { id } = req.params;
+    const updateData = req.body;
+
+    try {
+        const property = await Properties.findById(id);
+        if (!property) {
+            return res.status(404).json({ success: false, message: 'Propiedad no encontrada' });
+        }
+
+        Object.keys(updateData).forEach(key => {
+            property[key] = updateData[key];
+        });
+
+        await property.save();
+        return res.status(200).json({ success: true, message: 'Campo actualizado exitosamente', property });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Error al actualizar la propiedad: ' + error.message });
     }
-    res.status(200).json({ success: true, message: "Method not allowed" });
 };
+
 
 exports.getAppointments = async (req, res) => {
     /*  
-        #swagger.description = Get appointments for a property
+        #swagger.description = 'Obtener citas para una propiedad.'
         #swagger.parameters['PropertyID'] = {
             in: 'query',
-            description: "Property ID.",
+            description: 'ID de la propiedad para la cual se buscan citas.',
             required: true,
-            type: "number"
+            type: 'string'
+        }
+        #swagger.parameters['clientId'] = {
+            in: 'query',
+            description: 'ID del cliente para filtrar citas.',
+            required: false,
+            type: 'string'
+        }
+        #swagger.parameters['date'] = {
+            in: 'query',
+            description: 'Fecha de la cita para filtrar citas. Formato YYYY-MM-DD.',
+            required: false,
+            type: 'string'
         }
         #swagger.tags = ['Properties']
     */
-    const {
-        PropertyID
-    } = req.query;
-    if (PropertyID === "no existe") {
-        res.status(404).json({ success: false, message: "Dummy response" })
-    }
+    const { PropertyID, clientId, date } = req.query;
+    let query = { propertyId: PropertyID };
 
-    res.status(200).json({ success: true, message: "Method not allowed" });
+    if (clientId) query.clientId = clientId;
+    if (date) query.date = new Date(date);
+
+    try {
+        const appointments = await Appointment.find(query);
+        if (!appointments.length) {
+            return res.status(404).json({ success: false, message: 'No se encontraron citas para esta propiedad' });
+        }
+        return res.status(200).json({ success: true, appointments });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Error al obtener las citas: ' + error.message });
+    }
 };
+
 
 exports.createAppointments = async (req, res) => {
     /*  
-        #swagger.description = Create a appointment
+        #swagger.description = 'Create an appointment for a property.'
         #swagger.parameters['body'] = {
             in: 'body',
-            description: "Appointment to create",
+            description: 'Appointment to create.',
             required: true,
             schema: {
-                key: "value"
+                propertyId: '1',
+                date: '2023-07-15T14:00:00Z',
+                clientId: '123'
             }
         }
         #swagger.tags = ['Properties']
     */
-    const {
-        key,
-    } = req.body;
-    if (key === "no se puede crear") {
-        res.status(409).json({ success: false, message: "Dummy response" })
+    const appointmentData = req.body;
+    try {
+        const newAppointment = new Appointment(appointmentData);
+        await newAppointment.save();
+        return res.status(201).json({ success: true, message: 'Cita creada exitosamente', appointment: newAppointment });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Error al crear la cita: ' + error.message });
     }
-    res.status(201).json({ success: true, message: "Dummy response" });
 };
+
 
 exports.deleteProperty = async (req, res) => {
     /*  
