@@ -1807,7 +1807,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "number",
+            "type": "string",
             "description": "User ID."
           },
           {
@@ -1819,8 +1819,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"

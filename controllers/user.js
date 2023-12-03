@@ -294,16 +294,23 @@ exports.deleteUser = async (req, res) => {
           in: 'path',
           description: "User ID.",
           required: true,
-          type: "number"
+          type: "string"
       }
       #swagger.tags = ['Users']
   */
-  const {
-    id,
-  } = req.path;
-  if (id === "no existe") {
-    res.status(404).json({ success: false, message: "Dummy response" })
-  }
+  const { id } = req.params;
 
-  res.status(204).json({ success: true, message: "Dummy response" });
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+    }
+
+    await Favorites.deleteMany({ user: id });
+
+    await user.remove(); 
+    return res.status(200).json({ success: true, message: "Usuario eliminado exitosamente" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Error al eliminar el usuario: " + error.message });
+  }
 };
