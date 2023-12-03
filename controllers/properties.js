@@ -172,12 +172,6 @@ exports.uploadPhotoProperty = async (req, res) => {
     /*
         #swagger.description = Upload photo
         #swagger.consumes = ['multipart/form-data']  
-        #swagger.parameters['id'] = {
-            in: 'path',
-            description: "Property ID.",
-            required: true,
-            type: "number"
-        }
         #swagger.parameters['photo'] = {
             in: 'formData',
             description: "Photo to upload",
@@ -186,6 +180,7 @@ exports.uploadPhotoProperty = async (req, res) => {
         }
         #swagger.tags = ['Properties']
     */
+    let r = (Math.random() + 1).toString(36).substring(4);
     const s3Config = {
         credentials: {
             accessKeyId: process.env.AWS_S3_ACCESS_KEY,
@@ -195,9 +190,8 @@ exports.uploadPhotoProperty = async (req, res) => {
     };
     const bucketName = process.env.AWS_S3_BUCKET_NAME
     const file = req.file;
-    const id = req.params.id;
     const fileName = file.originalname;
-    const photoPath = "properties/" + id + "/" + fileName;
+    const photoPath = "properties/" + r + "/" + fileName;
 
     const s3Client = new S3Client(s3Config);
 

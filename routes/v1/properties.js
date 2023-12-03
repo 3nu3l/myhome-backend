@@ -24,7 +24,7 @@ const { isAuth } = require('../../middlewares/config/auth');
 router.post('/properties', cors(), isAuth, createProperty);
 router.post('/properties/appointments', cors(), isAuth, createAppointments);
 router.get('/properties', cors(), isAuth, getProperties);
-router.post('/properties/:id/photo', cors(), isAuth, upload.single('photo'), uploadPhotoProperty);
+router.post('/properties/photo', cors(), isAuth, upload.single('photo'), uploadPhotoProperty);
 router.get('/properties/appointments', cors(), isAuth, getAppointments);
 router.put('/properties/:id', cors(), isAuth, updateProperty);
 router.patch('/properties/:id', cors(), isAuth, updateFieldProperty);

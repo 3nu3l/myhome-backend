@@ -836,7 +836,7 @@
         }
       }
     },
-    "/properties/{id}/photo": {
+    "/properties/photo": {
       "post": {
         "tags": [
           "Properties"
@@ -846,13 +846,6 @@
           "multipart/form-data"
         ],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "number",
-            "description": "Property ID."
-          },
           {
             "name": "authorization",
             "in": "header",
