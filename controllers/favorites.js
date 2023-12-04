@@ -54,16 +54,19 @@ exports.putFavoriteProperties = async (req, res) => {
     const { user, properties } = req.body;
 
     try {
-        const updatedFavorites = await Favorites.findOneAndUpdate({ user }, { properties });
+        const update = { $addToSet: { properties: { $each: properties } } };
+        const updatedFavorites = await Favorites.findOneAndUpdate({ user }, update, { new: true });
+
         if (!updatedFavorites) {
             return res.status(404).json({ success: false, message: "User not found" });
         }
-        const updateFavorites = await Favorites.findOne({ user: user });
-        res.status(200).json({ success: true, message: "Favorites updated successfully", favorite: updateFavorites });
+
+        res.status(200).json({ success: true, message: "Favorites updated successfully", favorite: updatedFavorites });
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Error updating favorites" });
+        return res.status(500).json({ success: false, message: "Error updating favorites: " + error.message });
     }
 };
+
 
 exports.getFavoriteProperties = async (req, res) => {
     /*
